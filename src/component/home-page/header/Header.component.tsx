@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import Page from './pages/Page.component';
 import { menu } from './header.constant';
+import { Stack } from '@mui/material';
 
 const Header: FC = () => {
   return (
@@ -13,11 +14,11 @@ const Header: FC = () => {
 
       <div>Categories</div>
 
-      <div>
+      <Stack flexDirection="row" justifyContent="flex-end">
         {menu.map((menuItem) => (
           <Page {...menuItem} />
         ))}
-      </div>
+      </Stack>
     </div>
   );
 };
