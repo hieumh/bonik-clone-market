@@ -1,208 +1,239 @@
-import { TMenuOption } from './header.model';
+import { TCategory, TMenuOption } from "./header.model";
 
 export const menu: Array<TMenuOption> = [
   {
-    title: 'Home',
+    title: "Home",
     children: [
       {
-        title: 'Market 1',
+        title: "Market 1",
       },
       {
-        title: 'Market 1',
+        title: "Market 1",
       },
       {
-        title: 'Market 1',
+        title: "Market 1",
       },
       {
-        title: 'Market 1',
+        title: "Market 1",
       },
       {
-        title: 'Market 1',
+        title: "Market 1",
       },
       {
-        title: 'Market 1',
+        title: "Market 1",
       },
       {
-        title: 'Market 1',
+        title: "Market 1",
       },
       {
-        title: 'Market 1',
+        title: "Market 1",
       },
     ],
   },
   {
-    title: 'Pages',
+    title: "Pages",
     children: [
       {
-        title: 'Sale page',
+        title: "Sale page",
         children: [
           {
-            title: 'Version 1',
+            title: "Version 1",
           },
           {
-            title: 'Version 2',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    title: 'User Account',
-    children: [
-      {
-        title: 'Orders',
-        children: [
-          {
-            title: 'Order List',
-          },
-          {
-            title: 'Order Detail',
-          },
-        ],
-      },
-      {
-        title: 'Profile',
-        children: [
-          {
-            title: 'View Profile',
-          },
-          {
-            title: 'Order Detail',
-          },
-        ],
-      },
-      {
-        title: 'Address',
-        children: [
-          {
-            title: 'Order List',
-          },
-          {
-            title: 'Order Detail',
-          },
-        ],
-      },
-      {
-        title: 'Support tickets',
-        children: [
-          {
-            title: 'Order List',
-          },
-          {
-            title: 'Order Detail',
-          },
-        ],
-      },
-      {
-        title: 'Wishlist',
-        children: [
-          {
-            title: 'Order List',
-          },
-          {
-            title: 'Order Detail',
+            title: "Version 2",
           },
         ],
       },
     ],
   },
   {
-    title: 'Vender Account',
+    title: "User Account",
     children: [
       {
-        title: 'Dashboard',
-      },
-      {
-        title: 'Products',
+        title: "Orders",
         children: [
           {
-            title: 'All product',
+            title: "Order List",
           },
           {
-            title: 'Add / Edit product',
+            title: "Order Detail",
           },
         ],
       },
       {
-        title: 'Orders',
+        title: "Profile",
         children: [
           {
-            title: 'All orders',
+            title: "View Profile",
           },
           {
-            title: 'Order details',
+            title: "Order Detail",
           },
         ],
       },
       {
-        title: 'Profile',
-      },
-    ],
-  },
-  {
-    title: 'User Account',
-    children: [
-      {
-        title: 'Orders',
+        title: "Address",
         children: [
           {
-            title: 'Order List',
+            title: "Order List",
           },
           {
-            title: 'Order Detail',
+            title: "Order Detail",
           },
         ],
       },
       {
-        title: 'Profile',
+        title: "Support tickets",
         children: [
           {
-            title: 'View Profile',
+            title: "Order List",
           },
           {
-            title: 'Order Detail',
+            title: "Order Detail",
           },
         ],
       },
       {
-        title: 'Address',
+        title: "Wishlist",
         children: [
           {
-            title: 'Order List',
+            title: "Order List",
           },
           {
-            title: 'Order Detail',
-          },
-        ],
-      },
-      {
-        title: 'Support tickets',
-        children: [
-          {
-            title: 'Order List',
-          },
-          {
-            title: 'Order Detail',
-          },
-        ],
-      },
-      {
-        title: 'Wishlist',
-        children: [
-          {
-            title: 'Order List',
-          },
-          {
-            title: 'Order Detail',
+            title: "Order Detail",
           },
         ],
       },
     ],
   },
   {
-    title: 'Track My Orders',
+    title: "Vender Account",
+    children: [
+      {
+        title: "Dashboard",
+      },
+      {
+        title: "Products",
+        children: [
+          {
+            title: "All product",
+          },
+          {
+            title: "Add / Edit product",
+          },
+        ],
+      },
+      {
+        title: "Orders",
+        children: [
+          {
+            title: "All orders",
+          },
+          {
+            title: "Order details",
+          },
+        ],
+      },
+      {
+        title: "Profile",
+      },
+    ],
   },
   {
-    title: 'Back to Demos',
+    title: "User Account",
+    children: [
+      {
+        title: "Orders",
+        children: [
+          {
+            title: "Order List",
+          },
+          {
+            title: "Order Detail",
+          },
+        ],
+      },
+      {
+        title: "Profile",
+        children: [
+          {
+            title: "View Profile",
+          },
+          {
+            title: "Order Detail",
+          },
+        ],
+      },
+      {
+        title: "Address",
+        children: [
+          {
+            title: "Order List",
+          },
+          {
+            title: "Order Detail",
+          },
+        ],
+      },
+      {
+        title: "Support tickets",
+        children: [
+          {
+            title: "Order List",
+          },
+          {
+            title: "Order Detail",
+          },
+        ],
+      },
+      {
+        title: "Wishlist",
+        children: [
+          {
+            title: "Order List",
+          },
+          {
+            title: "Order Detail",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Track My Orders",
+  },
+  {
+    title: "Back to Demos",
+  },
+];
+
+export const CATEGORIES: Array<TCategory> = [
+  {
+    name: "Car",
+    index: 0,
+  },
+  {
+    name: "Clothes",
+    index: 1,
+  },
+  {
+    name: "Electronics",
+    index: 2,
+  },
+  {
+    name: "Laptop",
+    index: 3,
+  },
+  {
+    name: "Desktop",
+    index: 4,
+  },
+  {
+    name: "Camera",
+    index: 5,
+  },
+  {
+    name: "Toys",
+    index: 6,
   },
 ];

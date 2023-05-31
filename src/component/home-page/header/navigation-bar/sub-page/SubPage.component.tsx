@@ -4,12 +4,15 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Stack,
   Typography,
   styled,
 } from '@mui/material';
 import { FC, MouseEvent, useState } from 'react';
 import { TMenuOption } from '../header.model';
 import useMenu from '@/hooks/use-menu.hook';
+import StyledButton from '@/common/button/StyledButton.component';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 // TODO: move logic from this component to Page.component
 const SubPage: FC<TMenuOption> = ({ title, children = [] }) => {
@@ -17,7 +20,15 @@ const SubPage: FC<TMenuOption> = ({ title, children = [] }) => {
 
   return (
     <>
-      <Typography onClick={handleOpen}>{title}</Typography>
+      <Stack
+        onClick={handleOpen}
+        flexDirection="row"
+        justifyContent="space-between"
+      >
+        <Typography>{title}</Typography>
+
+        <ArrowRightIcon />
+      </Stack>
 
       <Menu
         open={isOpen}

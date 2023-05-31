@@ -1,17 +1,18 @@
-import { FC } from 'react';
-import Page from './pages/Page.component';
-import { menu } from './header.constant';
-import { Stack } from '@mui/material';
+import { FC } from "react";
+import Page from "./navigation-bar/pages/Page.component";
+import { menu } from "./header.constant";
+import { Stack } from "@mui/material";
+import Logo from "@/assets/logo.svg";
+import Search from "./search/Search.component";
 
 const Header: FC = () => {
   return (
-    <div>
+    <Stack>
       <div>
-        <img src="" />
+        <img src={Logo} alt="logo" />
       </div>
-      <div>Search bar</div>
+      <Search />
       <div>Actions here</div>
-
       <div>Categories</div>
 
       <Stack flexDirection="row" justifyContent="flex-end">
@@ -19,7 +20,7 @@ const Header: FC = () => {
           <Page {...menuItem} />
         ))}
       </Stack>
-    </div>
+    </Stack>
   );
 };
 

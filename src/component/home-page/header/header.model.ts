@@ -4,3 +4,8 @@ export type TMenuOption = NonNullable<
     children?: Array<TMenuOption>;
   }>
 >;
+
+export type TCategory = {
+  name: string;
+  index: number;
+};

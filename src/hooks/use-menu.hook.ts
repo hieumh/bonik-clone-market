@@ -10,25 +10,21 @@ interface IReturnValue {
 }
 
 const useMenu = (): IReturnValue => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const isOpen = Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [isOpen, setIsOpen] = useState(false); // use a separate state for open/close
 
   const handleOpen = (event: MouseEvent<HTMLElement>) => {
+    console.log('enter');
     setAnchorEl(event.currentTarget);
+    setIsOpen(true); // set open state to true
   };
 
   const handleClose = () => {
-    console.log('mouse leave');
     setAnchorEl(null);
+    setIsOpen(false); // set open state to false
   };
 
-  return {
-    anchorEl,
-    setAnchorEl,
-    isOpen,
-    handleOpen,
-    handleClose,
-  };
+  return { anchorEl, isOpen, setAnchorEl, handleOpen, handleClose };
 };
 
 export default useMenu;
