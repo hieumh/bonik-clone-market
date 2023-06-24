@@ -1,5 +1,5 @@
-import { THandler, TSetAction } from '@/model/common.model';
-import { MouseEvent, useState } from 'react';
+import { THandler, TSetAction } from "@/model/common.model";
+import { MouseEvent, useState } from "react";
 
 interface IReturnValue {
   anchorEl: HTMLElement | null;
@@ -11,17 +11,16 @@ interface IReturnValue {
 
 const useMenu = (): IReturnValue => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [isOpen, setIsOpen] = useState(false); // use a separate state for open/close
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = (event: MouseEvent<HTMLElement>) => {
-    console.log('enter');
     setAnchorEl(event.currentTarget);
-    setIsOpen(true); // set open state to true
+    setIsOpen(true);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
-    setIsOpen(false); // set open state to false
+    setIsOpen(false);
   };
 
   return { anchorEl, isOpen, setAnchorEl, handleOpen, handleClose };

@@ -1,4 +1,4 @@
-const encodePath = (
+export const encodePath = (
   url: string,
   obj: Record<string, string | number>
 ): string => {

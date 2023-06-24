@@ -5,6 +5,7 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
+  Box,
 } from "@mui/material";
 import { debounce } from "lodash";
 import { useQuery } from "@tanstack/react-query";
@@ -13,8 +14,16 @@ import { searchRequest } from "../header.helper";
 import { CATEGORIES } from "../header.constant";
 
 const StyledSearch = styled(TextField)({
-  "& fieldset": {
-    border: 0,
+  "& .MuiOutlinedInput-root": {
+    border: "1px solid #dfdfdf",
+    borderRadius: "40px",
+    "&:hover fieldset": {
+      borderColor: "#f7919180",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#f7919180",
+      boxShadow: "none",
+    },
   },
 });
 
@@ -35,7 +44,7 @@ const Search: FC = () => {
     setSearch(event.target.value);
   };
 
-  const handleChangeSelect = (event: SelectChangeEvent) => {
+  const handleChangeSelect = (event: SelectChangeEvent<string>) => {
     setCategoryIndex(event.target.value);
   };
 
@@ -44,31 +53,64 @@ const Search: FC = () => {
       if (Boolean(search)) {
         refetch();
       }
-    }, 2000);
+    }, 1000);
     debounceFetch();
 
     return () => {
       debounceFetch.cancel();
     };
-  }, [search]);
+  }, [search, refetch]);
+
+  useEffect(() => {
+    if (Boolean(categoryIndex + 1) && Boolean(search)) {
+      refetch();
+    }
+  }, [categoryIndex]);
 
   return (
-    <div>
+    <Box
+      sx={{
+        height: "40px",
+        minWidth: "600px",
+        position: "relative",
+      }}
+    >
       <StyledSearch
         value={search}
+        fullWidth
         onChange={handleChangeSearch}
         InputProps={{ startAdornment: <SearchIcon /> }}
         size="small"
+        placeholder="Search and hit enter..."
+        sx={{
+          "& input": {
+            marginLeft: "10px",
+          },
+        }}
       />
 
-      <Select value={categoryIndex} onChange={handleChangeSelect} size="small">
+      <Select
+        value={categoryIndex}
+        onChange={handleChangeSelect}
+        size="small"
+        sx={{
+          position: "absolute",
+          minWidth: "130px",
+          right: 0,
+          "& fieldset": {
+            border: "none",
+            borderLeft: "1px solid #dfdfdf",
+            outline: "none",
+          },
+        }}
+      >
         {CATEGORIES.map((category) => (
           <MenuItem key={category.index} value={category.index}>
             {category.name}
           </MenuItem>
         ))}
       </Select>
-    </div>
+    </Box>
   );
 };
 

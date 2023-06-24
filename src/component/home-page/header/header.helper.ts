@@ -1,4 +1,5 @@
 import { ApiHelper } from "@/helpers/api.helper";
+import { encodePath } from "@/helpers/common.helper";
 
 export const searchRequest = async (
   searchParams?: string,

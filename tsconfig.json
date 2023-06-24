@@ -23,6 +23,12 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@mui/*": [
+        "./node_modules/@mui/*"
+      ],
+      "@testing-library/react": [
+        "node_modules/@testing-library/react"
       ]
     }
   },
