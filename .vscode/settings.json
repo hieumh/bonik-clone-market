@@ -1,0 +1,5 @@
+{
+    "terminal.integrated.tabs.defaultIcon": "terminal",
+    "prettier.endOfLine": "crlf",
+    "files.eol": "auto"
+}
