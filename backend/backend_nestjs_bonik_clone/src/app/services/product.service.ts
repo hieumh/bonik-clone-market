@@ -1,47 +1,48 @@
-import { PrismaClient, Prisma } from '@prisma/client';
+import { PrismaClient, Prisma, IProduct, IFlashDeal } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
+import { mapper } from 'src/mapping/mapper';
+import { ProductDto } from '../dtos/product.dto';
+import { Product } from '../models/product.model';
+import { FlashDeal } from '../models/flash-deal.model';
+import { FlashDealDto } from '../dtos/flash-deal.dto';
 
 @Injectable()
 export class ProductService {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async create(data: Prisma.ProductCreateInput) {
-    try {
-      const result = await this.prisma.product.create({ data });
-      return result;
-    } catch (e) {
-      throw e;
-    }
+  async create(data) {
+    const result = await this.prisma.iProduct.create({ data });
+
+    return result;
   }
 
   async findAll() {
-    try {
-      return await this.prisma.product.findMany();
-    } catch (e) {
-      throw e;
-    }
+    const allProducts = await this.prisma.iProduct.findMany();
+
+    return allProducts;
   }
 
   async findAllFlashDeals() {
-    try {
-      return this.prisma.flashDeal.findMany();
-    } catch (e) {
-      throw e;
-    }
+    const flashDeals = await this.prisma.iFlashDeal.findMany({
+      include: {
+        product: true,
+      },
+    });
+
+    return flashDeals.map((element) =>
+      mapper.map(element, FlashDeal, FlashDealDto),
+    );
   }
 
-  async findAllByBanner() {
-    try {
-      const allProduct = await this.prisma.product.findMany({
-        include: {
-          flashDeal: true,
-          topRating: true,
-        },
-      });
+  async findAllByBanner(): Promise<ProductDto[]> {
+    const allProduct: IProduct[] = await this.prisma.iProduct.findMany({
+      include: {
+        flashDeal: true,
+      },
+    });
 
-      return allProduct;
-    } catch (e) {
-      throw e;
-    }
+    return allProduct.map((product) =>
+      mapper.map(product, Product, ProductDto),
+    );
   }
 }

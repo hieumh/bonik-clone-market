@@ -10,43 +10,73 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Category {
-  categoryId   Int           @id @default(autoincrement())
+model ICategory {
+  categoryId   Int            @id @default(autoincrement())
   categoryName String
-  products     Product[]
-  topCategory  TopCategory[]
+  products     IProduct[]
+  topCategory  ITopCategory[]
+
+  @@map("Category")
 }
 
-model Product {
-  productId   Int        @id @default(autoincrement())
-  categoryId  Int
-  productName String
-  price       Float
-  description String
-  rating      Float
-  category    Category   @relation(fields: [categoryId], references: [categoryId])
-  flashDeal   FlashDeal?
-  topRating   TopRating?
+model IProduct {
+  productId    Int            @id @default(autoincrement())
+  categoryId   Int
+  productName  String
+  price        Float
+  description  String
+  rating       Float
+  category     ICategory      @relation(fields: [categoryId], references: [categoryId])
+  flashDeal    IFlashDeal?
+  topRating    ITopRating?
+  cartProducts ICartProduct[]
+
+  @@map("Product")
 }
 
-model FlashDeal {
+model IFlashDeal {
   dealId    Int      @id @default(autoincrement())
   productId Int      @unique
   dealName  String
   dealPrice Float
   startDate DateTime
   endDate   DateTime
-  product   Product  @relation(fields: [productId], references: [productId])
+  product   IProduct @relation(fields: [productId], references: [productId])
+
+  @@map("FlashDeal")
 }
 
-model TopCategory {
-  categoryId Int      @id
+model ITopCategory {
+  categoryId Int       @id
   ranking    Int
-  category   Category @relation(fields: [categoryId], references: [categoryId])
+  category   ICategory @relation(fields: [categoryId], references: [categoryId])
+
+  @@map("TopCategory")
 }
 
-model TopRating {
-  productId Int     @id
+model ITopRating {
+  productId Int      @id
   rating    Float
-  product   Product @relation(fields: [productId], references: [productId])
+  product   IProduct @relation(fields: [productId], references: [productId])
+
+  @@map("TopRating")
+}
+
+model IShoppingCart {
+  cartId       Int            @id @default(autoincrement())
+  closedOrder  Boolean
+  cartProducts ICartProduct[]
+
+  @@map("ShoppingCart")
+}
+
+model ICartProduct {
+  cartProductId Int           @id @default(autoincrement())
+  cartId        Int
+  productId     Int
+  quantity      Int
+  shoppingCart  IShoppingCart @relation(fields: [cartId], references: [cartId])
+  product       IProduct      @relation(fields: [productId], references: [productId])
+
+  @@map("CartProduct")
 }
