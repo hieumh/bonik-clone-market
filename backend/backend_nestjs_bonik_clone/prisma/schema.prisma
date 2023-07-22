@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model ICategory {
+  categoryId   Int            @id @default(autoincrement())
+  categoryName String
+  products     IProduct[]
+  topCategory  ITopCategory[]
+
+  @@map("Category")
+}
+
+model IProduct {
+  productId        Int            @id @default(autoincrement())
+  categoryId       Int
+  productName      String
+  price            Float
+  description      String
+  rating           Float
+  productSoldCount Int            @default(0)
+  category         ICategory      @relation(fields: [categoryId], references: [categoryId])
+  flashDeal        IFlashDeal?
+  topRating        ITopRating?
+  cartProducts     ICartProduct[]
+
+  @@map("Product")
+}
+
+model IFlashDeal {
+  dealId    Int      @id @default(autoincrement())
+  productId Int      @unique
+  dealName  String
+  dealPrice Float
+  startDate DateTime
+  endDate   DateTime
+  product   IProduct @relation(fields: [productId], references: [productId])
+
+  @@map("FlashDeal")
+}
+
+model ITopCategory {
+  categoryId Int       @id
+  ranking    Int
+  category   ICategory @relation(fields: [categoryId], references: [categoryId])
+
+  @@map("TopCategory")
+}
+
+model ITopRating {
+  productId Int      @id
+  rating    Float
+  product   IProduct @relation(fields: [productId], references: [productId])
+
+  @@map("TopRating")
+}
+
+model IShoppingCart {
+  cartId       Int            @id @default(autoincrement())
+  closedOrder  Boolean
+  orderDate    DateTime?
+  cartProducts ICartProduct[]
+
+  @@map("ShoppingCart")
+}
+
+model ICartProduct {
+  cartProductId Int           @id @default(autoincrement())
+  cartId        Int
+  productId     Int
+  quantity      Int
+  shoppingCart  IShoppingCart @relation(fields: [cartId], references: [cartId])
+  product       IProduct      @relation(fields: [productId], references: [productId])
+
+  @@map("CartProduct")
+}
