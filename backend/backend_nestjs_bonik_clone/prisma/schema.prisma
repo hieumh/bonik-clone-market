@@ -20,16 +20,17 @@ model ICategory {
 }
 
 model IProduct {
-  productId    Int            @id @default(autoincrement())
-  categoryId   Int
-  productName  String
-  price        Float
-  description  String
-  rating       Float
-  category     ICategory      @relation(fields: [categoryId], references: [categoryId])
-  flashDeal    IFlashDeal?
-  topRating    ITopRating?
-  cartProducts ICartProduct[]
+  productId        Int            @id @default(autoincrement())
+  categoryId       Int
+  productName      String
+  price            Float
+  description      String
+  rating           Float
+  productSoldCount Int            @default(0)
+  category         ICategory      @relation(fields: [categoryId], references: [categoryId])
+  flashDeal        IFlashDeal?
+  topRating        ITopRating?
+  cartProducts     ICartProduct[]
 
   @@map("Product")
 }
@@ -65,6 +66,7 @@ model ITopRating {
 model IShoppingCart {
   cartId       Int            @id @default(autoincrement())
   closedOrder  Boolean
+  orderDate    DateTime?
   cartProducts ICartProduct[]
 
   @@map("ShoppingCart")
