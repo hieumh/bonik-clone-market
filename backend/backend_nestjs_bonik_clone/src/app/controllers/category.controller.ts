@@ -1,6 +1,5 @@
 import { Controller, Get, Injectable } from '@nestjs/common';
 import { CategoryService } from '../services/category.service';
-import { CategoryDto } from '../dtos/category.dto';
 import { ProductService } from '../services/product.service';
 import {
   TCategoriesResponse,

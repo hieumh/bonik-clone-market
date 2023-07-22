@@ -55,4 +55,17 @@ export class ProductService {
       },
     })) as unknown as TTopBestCategories;
   }
+
+  // TODO: update this feature after implement authentication service
+  async findTopRatings(takeNumber: number): Promise<Array<IProduct>> {
+    return await this.prisma.iProduct.findMany({
+      include: {
+        flashDeal: true,
+      },
+      orderBy: {
+        rating: 'desc',
+      },
+      take: takeNumber,
+    });
+  }
 }

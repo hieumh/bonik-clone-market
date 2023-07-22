@@ -25,11 +25,10 @@ model IProduct {
   productName      String
   price            Float
   description      String
-  rating           Float
+  rating           Int
   productSoldCount Int            @default(0)
   category         ICategory      @relation(fields: [categoryId], references: [categoryId])
   flashDeal        IFlashDeal?
-  topRating        ITopRating?
   cartProducts     ICartProduct[]
 
   @@map("Product")
@@ -53,14 +52,6 @@ model ITopCategory {
   category   ICategory @relation(fields: [categoryId], references: [categoryId])
 
   @@map("TopCategory")
-}
-
-model ITopRating {
-  productId Int      @id
-  rating    Float
-  product   IProduct @relation(fields: [productId], references: [productId])
-
-  @@map("TopRating")
 }
 
 model IShoppingCart {
