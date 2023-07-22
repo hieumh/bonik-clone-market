@@ -1,9 +1,4 @@
 import { Injectable, Logger } from '@nestjs/common';
-import {
-  ETemplateType,
-  TTemplate,
-  loggerTemplate,
-} from '../constants/logger.contant';
 
 @Injectable()
 export class LoggerService {

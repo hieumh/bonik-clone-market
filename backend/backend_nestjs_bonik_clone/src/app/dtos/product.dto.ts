@@ -10,6 +10,9 @@ export class ProductDto {
   @AutoMap()
   readonly productName: string;
 
+  @AutoMap()
+  productSoldCount: number;
+
   salePercent: number;
 
   @AutoMap()

@@ -1,6 +1,5 @@
 import { AutoMap } from '@automapper/classes';
-import { IProduct } from '@prisma/client';
-import { FlashDeal } from './flash-deal.model';
+import { IFlashDeal, IProduct } from '@prisma/client';
 
 export class Product implements IProduct {
   @AutoMap()
@@ -13,6 +12,9 @@ export class Product implements IProduct {
   readonly productName: string;
 
   @AutoMap()
+  productSoldCount: number;
+
+  @AutoMap()
   price: number;
 
   @AutoMap()
@@ -21,5 +23,5 @@ export class Product implements IProduct {
   @AutoMap()
   rating: number;
 
-  flashDeal?: FlashDeal;
+  flashDeal?: IFlashDeal;
 }

@@ -5,9 +5,10 @@ import { ProductModule } from './app/modules/product/product.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { loggerProvider } from './common/providers/logger.provider';
 import { ShoppingCartModule } from './app/modules/shopping-card/shopping-cart.module';
+import { CategoryModule } from './app/modules/category/category.module';
 
 @Module({
-  imports: [ProductModule, ShoppingCartModule],
+  imports: [ProductModule, ShoppingCartModule, CategoryModule],
   controllers: [AppController],
   providers: [AppService, loggerProvider],
 })
