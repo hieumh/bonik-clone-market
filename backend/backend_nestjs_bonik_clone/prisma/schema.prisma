@@ -26,6 +26,7 @@ model IProduct {
   price            Float
   description      String
   rating           Int
+  createAt         DateTime       @default(now())
   productSoldCount Int            @default(0)
   category         ICategory      @relation(fields: [categoryId], references: [categoryId])
   flashDeal        IFlashDeal?

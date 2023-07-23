@@ -1,4 +1,10 @@
-import { Controller, Get, Injectable, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Injectable,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { ProductService } from '../services/product.service';
 import { FlashDeal } from '../models/flash-deal.model';
 import { FlashDealDto } from '../dtos/flash-deal.dto';
@@ -9,7 +15,10 @@ import {
   TFlashDealsResponse,
   TProductsResponse,
 } from 'src/common/interfaces/product.interface';
-import { DEFAULT_NO_OF_TOP_RATINGS } from 'src/common/constants/product.constant';
+import {
+  DEFAULT_NO_OF_NEW_ARRIVALS,
+  DEFAULT_NO_OF_TOP_RATINGS,
+} from 'src/common/constants/product.constant';
 
 @Injectable()
 @Controller('product')
@@ -45,13 +54,24 @@ export class ProductController {
 
   @Get('/top-ratings')
   async getTopRatings(
-    @Param('take') takeNumber = DEFAULT_NO_OF_TOP_RATINGS,
+    @Param('take', ParseIntPipe) takeNumber = DEFAULT_NO_OF_TOP_RATINGS,
   ): TProductsResponse {
     const topRatingProducts = await this.productService.findTopRatings(
       takeNumber,
     );
 
     return topRatingProducts.map((product) =>
+      mapper.map(product, Product, ProductDto),
+    );
+  }
+
+  @Get('/new-arrivals')
+  async getNewArrivals(
+    @Param('take', ParseIntPipe) takeNumber = DEFAULT_NO_OF_NEW_ARRIVALS,
+  ) {
+    const newArrivals = await this.productService.findNewArrivals(takeNumber);
+
+    return newArrivals.map((product) =>
       mapper.map(product, Product, ProductDto),
     );
   }

@@ -11,6 +11,9 @@ export class ProductDto {
   readonly productName: string;
 
   @AutoMap()
+  createAt: Date;
+
+  @AutoMap()
   productSoldCount: number;
 
   salePercent: number;

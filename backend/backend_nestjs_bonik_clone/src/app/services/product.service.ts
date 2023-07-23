@@ -68,4 +68,16 @@ export class ProductService {
       take: takeNumber,
     });
   }
+
+  async findNewArrivals(takeNumber: number): Promise<Array<IProduct>> {
+    return await this.prisma.iProduct.findMany({
+      include: {
+        flashDeal: true,
+      },
+      orderBy: {
+        createAt: 'desc',
+      },
+      take: takeNumber,
+    });
+  }
 }
