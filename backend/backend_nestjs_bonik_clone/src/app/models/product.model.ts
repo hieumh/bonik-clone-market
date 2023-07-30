@@ -12,6 +12,9 @@ export class Product implements IProduct {
   readonly productName: string;
 
   @AutoMap()
+  createAt: Date;
+
+  @AutoMap()
   productSoldCount: number;
 
   @AutoMap()
@@ -23,5 +26,5 @@ export class Product implements IProduct {
   @AutoMap()
   rating: number;
 
-  flashDeal?: IFlashDeal;
+  flashDeal: IFlashDeal;
 }

@@ -1,4 +1,4 @@
-import { FC, Ref } from "react";
+import { FC, Ref, useRef } from "react";
 import StyledButton from "@/common/button/StyledButton.component";
 import WidgetsIcon from "@mui/icons-material/Widgets";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -28,6 +28,8 @@ const CategoryMenu: FC = () => {
     handleLeaveChild,
   } = useMenuMulti<HTMLDivElement>();
 
+  const categoriesRef = useRef<HTMLButtonElement>(null);
+
   return (
     <Stack
       sx={{
@@ -35,7 +37,12 @@ const CategoryMenu: FC = () => {
         maxWidth: "300px",
       }}
     >
-      <Stack flexDirection="column" alignItems="flex-start" gap="8px">
+      <Stack
+        flexDirection="column"
+        alignItems="flex-start"
+        gap="8px"
+        ref={categoriesRef}
+      >
         <StyledButton
           startIcon={<WidgetsIcon />}
           endIcon={<KeyboardArrowDownIcon />}
@@ -48,7 +55,15 @@ const CategoryMenu: FC = () => {
             width: "280px",
           }}
         >
-          <List>
+          <List
+            sx={{
+              position: "absolute",
+              top: "50px",
+              width: `${categoriesRef.current?.clientWidth}px`,
+              boxShadow:
+                "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)",
+            }}
+          >
             {CATEGORY_MENU.map((menuItem, idx) => (
               <ListItemButton
                 ref={listItemRef}
@@ -88,7 +103,11 @@ const CategoryMenu: FC = () => {
             (listItemRef?.current?.clientHeight || 0)
           }
           width="500px"
-          left="101%"
+          left={
+            categoriesRef.current?.clientWidth
+              ? categoriesRef.current?.clientWidth + 2 + "px"
+              : 0
+          }
           onMouseEnter={handleEnterChild}
           borderRadius="4px"
           onMouseLeave={handleLeaveChild}

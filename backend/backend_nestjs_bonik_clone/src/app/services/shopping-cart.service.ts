@@ -2,13 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { ICartProduct, IShoppingCart, PrismaClient } from '@prisma/client';
 import { NotFoundDataException } from 'src/common/exceptions/not-found-data.exception';
 import { EUpdateQuantity } from 'src/common/constants/common.constant';
+import {
+  IPaginationOptions,
+  IPaginationResult,
+  paginate,
+} from 'src/common/helpers/pagination.helper';
 
 @Injectable()
 export class ShoppingCartService {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async findAll(): Promise<Array<ICartProduct>> {
-    return await this.prisma.iCartProduct.findMany({
+  async findAll(
+    paginationOptions?: IPaginationOptions,
+  ): Promise<IPaginationResult<ICartProduct>> {
+    return paginate<ICartProduct>(this.prisma.iCartProduct, {
+      ...paginationOptions,
       include: {
         product: true,
         shoppingCart: true,

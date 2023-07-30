@@ -1,4 +1,4 @@
-import { Catch, HttpStatus, BadRequestException } from '@nestjs/common';
+import { Catch, HttpStatus } from '@nestjs/common';
 import { BaseExceptionFilter } from './base-exception.filter';
 import { INTERNAL_SERVER_ERROR } from 'src/common/constants/common.constant';
 

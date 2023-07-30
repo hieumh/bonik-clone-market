@@ -1,11 +1,13 @@
-import { Controller, Get, Injectable } from '@nestjs/common';
+import { Controller, Get, Injectable, UseInterceptors } from '@nestjs/common';
 import { CategoryService } from '../services/category.service';
-import { CategoryDto } from '../dtos/category.dto';
 import { ProductService } from '../services/product.service';
 import {
   TCategoriesResponse,
   TTopBestCategories,
 } from 'src/common/interfaces/category.interface';
+import { MapInterceptor } from '@automapper/nestjs';
+import { Category } from '../models/category.model';
+import { CategoryDto } from '../dtos/category.dto';
 
 @Injectable()
 @Controller('category')
@@ -16,6 +18,7 @@ export class CategoryController {
   ) {}
 
   @Get()
+  @UseInterceptors(MapInterceptor(Category, CategoryDto))
   async findAllCategory(): TCategoriesResponse {
     return await this.categoryService.findAllCategory();
   }
