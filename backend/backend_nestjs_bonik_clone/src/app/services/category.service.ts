@@ -14,9 +14,7 @@ export class CategoryService {
     return await this.prismaClient.iCategory.findMany();
   }
 
-  async findTopCategory(
-    noOfTopCategory: number = 3,
-  ): Promise<Array<ICategory>> {
+  async findTopCategory(noOfTopCategory = 3): Promise<Array<ICategory>> {
     const allCategories = await this.findAllCategory();
     const topBestSellerProduct = await this.productService.findTopBestSeller();
 

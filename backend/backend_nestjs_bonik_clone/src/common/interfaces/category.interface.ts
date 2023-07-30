@@ -1,3 +1,4 @@
+import * as Joi from 'joi';
 import { CategoryDto } from 'src/app/dtos/category.dto';
 
 export type TCategoriesResponse = Promise<Array<CategoryDto>>;
@@ -9,3 +10,8 @@ export type TTopBestCategories = Promise<
     };
   }>
 >;
+
+export const shoppingCartMappingSchema = Joi.object({
+  cartProductId: Joi.number().required(),
+  type: Joi.string().required(),
+});

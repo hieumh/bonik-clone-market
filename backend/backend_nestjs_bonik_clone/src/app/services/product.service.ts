@@ -1,6 +1,13 @@
-import { PrismaClient, Prisma, IProduct, IFlashDeal } from '@prisma/client';
+import { PrismaClient, IProduct, IFlashDeal } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 import { TTopBestCategories } from 'src/common/interfaces/category.interface';
+import { map, take, orderBy } from 'lodash';
+import { getPercentOfFirstNum } from 'src/common/helpers/common.helper';
+import {
+  IPaginationOptions,
+  IPaginationResult,
+  paginate,
+} from 'src/common/helpers/pagination.helper';
 
 @Injectable()
 export class ProductService {
@@ -10,20 +17,34 @@ export class ProductService {
     return await this.prisma.iProduct.create({ data });
   }
 
-  async findAll(): Promise<Array<IProduct>> {
-    return await this.prisma.iProduct.findMany();
+  async findAll(
+    paginationOptions?: IPaginationOptions,
+  ): Promise<IPaginationResult<IProduct>> {
+    return paginate<IProduct>(this.prisma.iProduct, {
+      ...paginationOptions,
+      include: {
+        flashDeal: true,
+      },
+    });
   }
 
-  async findAllFlashDeals(): Promise<Array<IFlashDeal>> {
-    return await this.prisma.iFlashDeal.findMany({
+  async findAllFlashDeals(
+    paginationOptions?: IPaginationOptions,
+  ): Promise<IPaginationResult<IFlashDeal>> {
+    return paginate(this.prisma.iFlashDeal, {
+      ...paginationOptions,
       include: {
         product: true,
       },
     });
   }
 
-  async findAllByBanner(): Promise<Array<IProduct>> {
-    return await this.prisma.iProduct.findMany({
+  // TODO: rewrite this service
+  async findAllByBanner(
+    paginationOptions?: IPaginationOptions,
+  ): Promise<IPaginationResult<IProduct>> {
+    return paginate(this.prisma.iProduct, {
+      ...paginationOptions,
       include: {
         flashDeal: true,
       },
@@ -79,5 +100,24 @@ export class ProductService {
       },
       take: takeNumber,
     });
+  }
+
+  async findBigDiscounts(takeNumber: number): Promise<Array<IProduct>> {
+    const allProducts = await this.findAll();
+
+    return take(
+      orderBy(
+        map(allProducts, (product) => ({
+          ...product,
+          salePercent: getPercentOfFirstNum(
+            product.price - product.flashDeal.dealPrice,
+            product.price,
+          ),
+        })),
+        ['salePercent'],
+        ['desc'],
+      ),
+      takeNumber,
+    );
   }
 }

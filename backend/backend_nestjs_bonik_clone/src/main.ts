@@ -27,7 +27,7 @@ async function bootstrap() {
       mapFrom((source) =>
         getPercentOfFirstNum(
           source.price - source.flashDeal.dealPrice,
-          source.flashDeal.dealPrice,
+          source.price,
         ),
       ),
     ),
@@ -41,7 +41,7 @@ async function bootstrap() {
       mapFrom((source) =>
         getPercentOfFirstNum(
           source.product.price - source.dealPrice,
-          source.dealPrice,
+          source.product.price,
         ),
       ),
     ),

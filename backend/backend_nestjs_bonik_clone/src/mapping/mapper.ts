@@ -1,6 +1,7 @@
 import { classes } from '@automapper/classes';
-import { createMapper } from '@automapper/core';
+import { CamelCaseNamingConvention, createMapper } from '@automapper/core';
 
 export const mapper = createMapper({
   strategyInitializer: classes(),
+  namingConventions: new CamelCaseNamingConvention(),
 });

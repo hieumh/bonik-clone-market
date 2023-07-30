@@ -4,6 +4,8 @@ import {
   Injectable,
   Param,
   ParseIntPipe,
+  Query,
+  UsePipes,
 } from '@nestjs/common';
 import { ProductService } from '../services/product.service';
 import { FlashDeal } from '../models/flash-deal.model';
@@ -13,12 +15,16 @@ import { ProductDto } from '../dtos/product.dto';
 import { Product } from '../models/product.model';
 import {
   TFlashDealsResponse,
+  TProductsPaginationResult,
   TProductsResponse,
 } from 'src/common/interfaces/product.interface';
 import {
   DEFAULT_NO_OF_NEW_ARRIVALS,
   DEFAULT_NO_OF_TOP_RATINGS,
 } from 'src/common/constants/product.constant';
+import { IPaginationOptions } from 'src/common/helpers/pagination.helper';
+import { JoiValidationPipe } from 'src/common/middlewares/pipes/joi-validation.pipe';
+import { paginationSchema } from 'src/common/interfaces/common.interface';
 
 @Injectable()
 @Controller('product')
@@ -26,30 +32,52 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Get()
-  async getAllProduct(): TProductsResponse {
-    const allProducts = await this.productService.findAll();
+  @UsePipes(new JoiValidationPipe(paginationSchema))
+  async getAllProduct(
+    @Query() paginationOptions: IPaginationOptions,
+  ): TProductsPaginationResult {
+    const dataResponse = await this.productService.findAll(paginationOptions);
 
-    return allProducts.map((product) =>
-      mapper.map(product, Product, ProductDto),
-    );
+    return {
+      ...dataResponse,
+      items: dataResponse.items.map((product) =>
+        mapper.map(product, Product, ProductDto),
+      ),
+    };
   }
 
   @Get('/flash-deal')
-  async getProductByFlashDeals(): TFlashDealsResponse {
-    const allFlashDeals = await this.productService.findAllFlashDeals();
-
-    return allFlashDeals.map((flashDeal) =>
-      mapper.map(flashDeal, FlashDeal, FlashDealDto),
+  @UsePipes(new JoiValidationPipe(paginationSchema))
+  async getProductByFlashDeals(
+    @Query() paginationOptions: IPaginationOptions,
+  ): TFlashDealsResponse {
+    const dataResponse = await this.productService.findAllFlashDeals(
+      paginationOptions,
     );
+
+    return {
+      ...dataResponse,
+      items: dataResponse.items.map((deal) =>
+        mapper.map(deal, FlashDeal, FlashDealDto),
+      ),
+    };
   }
 
   @Get('/banner')
-  async getBanner(): TProductsResponse {
-    const productByBanners = await this.productService.findAllByBanner();
-
-    return productByBanners.map((product) =>
-      mapper.map(product, Product, ProductDto),
+  @UsePipes(new JoiValidationPipe(paginationSchema))
+  async getBanner(
+    @Query() paginationOptions: IPaginationOptions,
+  ): TProductsPaginationResult {
+    const dataResponse = await this.productService.findAllByBanner(
+      paginationOptions,
     );
+
+    return {
+      ...dataResponse,
+      items: dataResponse.items.map((product) =>
+        mapper.map(product, Product, ProductDto),
+      ),
+    };
   }
 
   @Get('/top-ratings')
@@ -67,8 +95,8 @@ export class ProductController {
 
   @Get('/new-arrivals')
   async getNewArrivals(
-    @Param('take', ParseIntPipe) takeNumber = DEFAULT_NO_OF_NEW_ARRIVALS,
-  ) {
+    @Query('take', ParseIntPipe) takeNumber = DEFAULT_NO_OF_NEW_ARRIVALS,
+  ): TProductsResponse {
     const newArrivals = await this.productService.findNewArrivals(takeNumber);
 
     return newArrivals.map((product) =>
