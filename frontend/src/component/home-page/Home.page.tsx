@@ -10,9 +10,26 @@ const Home: FC<IHomeProps> = () => {
       <Box height="34px" sx={{ backgroundColor: "#0F3460" }}>
         call me
       </Box>
+
       <Box marginX="auto" maxWidth="1200px">
         <Header />
       </Box>
+      {/* 
+    <Box>
+      <FlashDeals />
+    </Box>
+
+    <Box>
+      <TopCategory />
+    </Box>
+
+    <Box>
+      <TopRatings />
+    </Box>
+
+    <Box>
+      <FeaturedBrands />
+    </Box> */}
     </Box>
   );
 };

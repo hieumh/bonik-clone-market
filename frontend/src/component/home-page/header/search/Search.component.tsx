@@ -18,10 +18,10 @@ const StyledSearch = styled(TextField)({
     border: "1px solid #dfdfdf",
     borderRadius: "40px",
     "&:hover fieldset": {
-      borderColor: "#f7919180",
+      border: "1px solid #f9000080",
     },
     "&.Mui-focused fieldset": {
-      borderColor: "#f7919180",
+      border: "1px solid #f9000080",
       boxShadow: "none",
     },
   },
