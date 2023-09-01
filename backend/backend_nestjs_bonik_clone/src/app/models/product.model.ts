@@ -12,6 +12,12 @@ export class Product implements IProduct {
   readonly productName: string;
 
   @AutoMap()
+  readonly brandId: number;
+
+  @AutoMap()
+  readonly vendorId: number;
+
+  @AutoMap()
   createAt: Date;
 
   @AutoMap()

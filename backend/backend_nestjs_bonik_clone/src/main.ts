@@ -12,6 +12,10 @@ import { InternalServerErrorExceptionFilter } from './common/middlewares/excepti
 import { Category } from './app/models/category.model';
 import { CategoryDto } from './app/dtos/category.dto';
 import { NotFoundDataExceptionFilter } from './common/middlewares/exception-filters/not-found-data-exception.filter';
+import { BrandDto } from './app/dtos/brand.dto';
+import { Brand } from './app/models/brand.model';
+import { User } from './app/models/user.model';
+import { UserDto } from './app/dtos/user.dto';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -46,8 +50,9 @@ async function bootstrap() {
       ),
     ),
   );
-
   createMap(mapper, Category, CategoryDto);
+  createMap(mapper, Brand, BrandDto);
+  createMap(mapper, User, UserDto);
 
   app.useGlobalFilters(
     new BadRequestExceptionFilter(),

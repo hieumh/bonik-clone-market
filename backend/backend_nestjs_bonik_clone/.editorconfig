@@ -1,0 +1,4 @@
+# .editorconfig
+
+[*.{ts,tsx}]
+end_of_line = crlf  # or crlf if you prefer

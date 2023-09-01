@@ -1,6 +1,6 @@
 // Import the Prisma Client
-const { PrismaClient } = require('@prisma/client');
-const { faker } = require('@faker-js/faker');
+import { PrismaClient } from '@prisma/client';
+import { faker } from '@faker-js/faker';
 
 // Create an instance of the Prisma Client
 const prisma = new PrismaClient();
@@ -9,87 +9,57 @@ const prisma = new PrismaClient();
 async function seed() {
   try {
     // Create the category data
-    // const categoryData = [{ categoryName: 'TV' }, { categoryName: 'Car' }];
+    const categoryData = [{ categoryName: 'TV' }, { categoryName: 'Car' }];
 
-    // // Insert the category data into the database
-    // const categories = await prisma.category.createMany({
-    //   data: categoryData,
-    // });
+    // Insert the category data into the database
+    const categoriesRes = await prisma.iCategory.createMany({
+      data: categoryData,
+    });
+
+    const categories = await prisma.iCategory.findMany();
+    const categoriesIds = categories.map((c) => c.categoryId);
+
+    const generateBrands = Array.from({ length: 4 }, () => ({
+      name: faker.animal.cow(),
+    }));
+
+    const brandRes = await prisma.iBrand.createMany({
+      data: generateBrands,
+    });
+
+    const brands = await prisma.iBrand.findMany();
 
     // Create the product data
-    // const productData = [
-    //   {
-    //     categoryId: 1,
-    //     productName: 'Samsung QLED 4K TV',
-    //     price: 1499.99,
-    //     description: 'Experience stunning visuals with this Samsung QLED TV.',
-    //     rating: 4.7,
-    //   },
-    //   {
-    //     categoryId: 1,
-    //     productName: 'LG OLED 4K TV',
-    //     price: 1999.99,
-    //     description:
-    //       'Enjoy deep blacks and vibrant colors with this LG OLED TV.',
-    //     rating: 4.9,
-    //   },
-    //   {
-    //     categoryId: 2,
-    //     productName: 'Toyota Camry',
-    //     price: 28999.99,
-    //     description:
-    //       'Reliable and fuel-efficient sedan with advanced safety features.',
-    //     rating: 4.6,
-    //   },
-    //   {
-    //     categoryId: 2,
-    //     productName: 'Honda CR-V',
-    //     price: 32999.99,
-    //     description:
-    //       'Versatile SUV with spacious interior and great performance.',
-    //     rating: 4.8,
-    //   },
-    // ];
+    const productData = Array.from({ length: 6 }, () => ({
+      categoryId: faker.helpers.arrayElement(categoriesIds),
+      productName: faker.commerce.productName(),
+      price: faker.number.float({ min: 0, max: 40000 }),
+      description: faker.commerce.productDescription(),
+      rating: faker.number.int({ min: 0, max: 5 }),
+      brandId: faker.helpers.arrayElement(brands).brandId,
+      createAt: faker.date.anytime(),
+      productSoldCount: faker.number.int({ min: 0, max: 40 }),
+    }));
 
-    // // Insert the product data into the database
-    // const products = await prisma.product.createMany({
-    //   data: productData,
-    // });
+    // Insert the product data into the database
+    const productsRes = await prisma.iProduct.createMany({
+      data: productData,
+    });
 
-    // const fakeFlashDeals = Array.from({ length: 4 }, (_, index) => ({
-    //   dealId: index,
-    //   productId: index + 9,
-    //   dealName: faker.commerce.productName(),
-    //   dealPrice: +faker.commerce.price(),
-    //   startDate: faker.date.recent(),
-    //   endDate: faker.date.future(),
-    // }));
+    const products = await prisma.iProduct.findMany();
 
-    // // Create records using Prisma
-    // const createdFlashDeals = await prisma.flashDeal.createMany({
-    //   data: fakeFlashDeals,
-    // });
+    const fakeFlashDeals = Array.from({ length: 4 }, (_, index) => ({
+      productId: products[index].productId,
+      dealName: faker.commerce.productName(),
+      dealPrice: +faker.commerce.price(),
+      startDate: faker.date.recent(),
+      endDate: faker.date.future(),
+    }));
 
-    // const fakeTopCategories = Array.from({ length: 2 }, (_, index) => ({
-    //   categoryId: index + 1,
-    //   ranking: faker.datatype.number({ min: 1, max: 10 }),
-    // }));
-
-    // // Create records for TopCategory
-    // const createdTopCategories = await prisma.topCategory.createMany({
-    //   data: fakeTopCategories,
-    // });
-
-    // Generate fake data for TopRating
-    // const fakeTopRatings = Array.from({ length: 2 }, (_, index) => ({
-    //   productId: index + 9,
-    //   rating: faker.datatype.float({ min: 1, max: 5, precision: 0.1 }),
-    // }));
-
-    // // Create records for TopRating
-    // const createdTopRatings = await prisma.topRating.createMany({
-    //   data: fakeTopRatings,
-    // });
+    // Create records using Prisma
+    const createdFlashDeals = await prisma.iFlashDeal.createMany({
+      data: fakeFlashDeals,
+    });
 
     const shoppingCart = await prisma.iShoppingCart.create({
       data: {
@@ -101,17 +71,17 @@ async function seed() {
     const cartProduct = await prisma.iCartProduct.create({
       data: {
         cartId: shoppingCart.cartId,
-        productId: 9,
+        productId: products[0].productId,
         quantity: +faker.random.numeric(),
       },
     });
 
     console.log('Seed data created successfully:', {
-      // createdFlashDeals,
-      // products,
-      // createdTopCategories,
-      // createdTopRatings,
+      categoriesRes,
+      createdFlashDeals,
+      productsRes,
       cartProduct,
+      brandRes,
     });
   } catch (error) {
     console.error('Error seeding data:', error);
