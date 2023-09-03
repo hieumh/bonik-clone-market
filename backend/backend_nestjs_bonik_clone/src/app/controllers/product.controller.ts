@@ -31,6 +31,14 @@ import { paginationSchema } from 'src/common/interfaces/common.interface';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Get('search')
+  async searchProduct(
+    @Query('searchText') searchText: string,
+    @Query('category', ParseIntPipe) categoryId: number,
+  ) {
+    return this.productService.search(searchText, categoryId);
+  }
+
   @Get()
   @UsePipes(new JoiValidationPipe(paginationSchema))
   async getAllProduct(

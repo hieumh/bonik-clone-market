@@ -135,4 +135,15 @@ export class ProductService {
       },
     );
   }
+
+  async search(searchText: string, categoryId: number): Promise<IProduct[]> {
+    return (await this.prisma.iProduct.findMany({
+      where: {
+        productName: {
+          contains: searchText,
+        },
+        categoryId,
+      },
+    })) as IProduct[];
+  }
 }
