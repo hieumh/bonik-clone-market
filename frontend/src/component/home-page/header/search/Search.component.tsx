@@ -6,24 +6,84 @@ import {
   MenuItem,
   SelectChangeEvent,
   Box,
+  SelectProps,
+  Theme,
 } from "@mui/material";
 import { debounce } from "lodash";
 import { useQuery } from "@tanstack/react-query";
 import SearchIcon from "@mui/icons-material/Search";
 import { searchRequest } from "../header.helper";
 import { CATEGORIES } from "../header.constant";
+import { COLORS } from "@/constants/ui.constant";
+
+const StyledSelect = styled(Select)({
+  minWidth: "130px",
+  border: `1px solid ${COLORS.white}`,
+  borderRadius: "4px 40px 40px 4px",
+  outline: "none",
+
+  "& .MuiOutlinedInput-notchedOutline": {
+    outline: "none",
+    borderColor: "transparent",
+  },
+  "&:hover .MuiOutlinedInput-notchedOutline": {
+    border: `1px solid ${COLORS.baseColor}`,
+    borderRadius: "4px 40px 40px 4px",
+    outline: "none",
+  },
+  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    border: `1px solid ${COLORS.baseColor}`,
+    borderRadius: "4px 40px 40px 4px",
+    outline: "none",
+  },
+});
+
+const StyledBox = styled(Box)(
+  ({
+    isHoverSearch,
+  }: SelectProps<unknown> & {
+    isHoverSearch: boolean;
+  }) => ({
+    height: "40px",
+    minWidth: "600px",
+    borderRadius: "40px",
+
+    display: "flex",
+    flexDirection: "row",
+    border: isHoverSearch
+      ? `1px solid ${COLORS.baseColor}`
+      : `1px solid ${COLORS.white}`,
+  })
+);
 
 const StyledSearch = styled(TextField)({
+  border: "none",
+  "& input": {
+    marginLeft: "10px",
+  },
+  borderColor: "transparent",
+  "& fieldset": {
+    borderColor: "transparent",
+  },
+  "&:hover fieldset": {
+    borderColor: "transparent",
+  },
+  "&.Mui-focused fieldset": {
+    borderColor: "transparent",
+  },
   "& .MuiOutlinedInput-root": {
-    border: "1px solid #dfdfdf",
-    borderRadius: "40px",
+    "& fieldset": {
+      borderColor: "transparent",
+    },
     "&:hover fieldset": {
-      border: "1px solid #f9000080",
+      borderColor: "transparent",
     },
     "&.Mui-focused fieldset": {
-      border: "1px solid #f9000080",
-      boxShadow: "none",
+      borderColor: "transparent",
     },
+  },
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderWidth: "0",
   },
 });
 
@@ -32,6 +92,7 @@ const Search: FC = () => {
   const [categoryIndex, setCategoryIndex] = useState<string>(
     String(CATEGORIES[0].index)
   );
+  const [isHoverSearch, setHoverSearch] = useState<boolean>(false);
   const { refetch } = useQuery(
     ["search"],
     () => searchRequest(search, categoryIndex),
@@ -44,8 +105,16 @@ const Search: FC = () => {
     setSearch(event.target.value);
   };
 
-  const handleChangeSelect = (event: SelectChangeEvent<string>) => {
-    setCategoryIndex(event.target.value);
+  const handleChangeSelect = (event: SelectChangeEvent<unknown>) => {
+    setCategoryIndex(event.target.value as string);
+  };
+
+  const handleHoverSearch = () => {
+    setHoverSearch(true);
+  };
+
+  const handleLeaveSearch = () => {
+    setHoverSearch(false);
   };
 
   useEffect(() => {
@@ -68,13 +137,7 @@ const Search: FC = () => {
   }, [categoryIndex]);
 
   return (
-    <Box
-      sx={{
-        height: "40px",
-        minWidth: "600px",
-        position: "relative",
-      }}
-    >
+    <StyledBox isHoverSearch={isHoverSearch}>
       <StyledSearch
         value={search}
         fullWidth
@@ -82,35 +145,23 @@ const Search: FC = () => {
         InputProps={{ startAdornment: <SearchIcon /> }}
         size="small"
         placeholder="Search and hit enter..."
-        sx={{
-          "& input": {
-            marginLeft: "10px",
-          },
-        }}
+        onMouseDown={handleHoverSearch}
+        onMouseOver={handleHoverSearch}
+        onMouseLeave={handleLeaveSearch}
       />
 
-      <Select
+      <StyledSelect
         value={categoryIndex}
         onChange={handleChangeSelect}
         size="small"
-        sx={{
-          position: "absolute",
-          minWidth: "130px",
-          right: 0,
-          "& fieldset": {
-            border: "none",
-            borderLeft: "1px solid #dfdfdf",
-            outline: "none",
-          },
-        }}
       >
         {CATEGORIES.map((category) => (
           <MenuItem key={category.index} value={category.index}>
             {category.name}
           </MenuItem>
         ))}
-      </Select>
-    </Box>
+      </StyledSelect>
+    </StyledBox>
   );
 };
 
