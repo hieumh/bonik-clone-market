@@ -1,6 +1,7 @@
 import { AutoMap } from '@automapper/classes';
+import { IUser } from '@prisma/client';
 
-export class User {
+export class User implements IUser {
   @AutoMap()
   userId: number;
 

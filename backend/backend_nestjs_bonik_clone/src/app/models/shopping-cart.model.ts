@@ -1,4 +1,7 @@
-export class ShoppingCart {
+import { IShoppingCart } from '@prisma/client';
+
+export class ShoppingCart implements IShoppingCart {
   cartId: number;
-  closeOrdered: boolean;
+  closedOrder: boolean;
+  orderDate: Date;
 }
