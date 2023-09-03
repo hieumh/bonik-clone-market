@@ -1,6 +1,9 @@
-// Http error default message
+// http error default message
 export const INTERNAL_SERVER_ERROR = 'Internal Server Error.';
 export const NOT_FOUND_DATA = 'The requested data could not be found.';
+
+// http ok message
+export const OK = 'OK';
 
 export enum EUpdateQuantity {
   INCREMENT = 'increment',

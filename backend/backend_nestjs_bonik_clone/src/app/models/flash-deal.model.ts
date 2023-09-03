@@ -1,7 +1,7 @@
 import { AutoMap } from '@automapper/classes';
-import { IProduct } from '@prisma/client';
+import { IFlashDeal, IProduct } from '@prisma/client';
 
-export class FlashDeal {
+export class FlashDeal implements IFlashDeal {
   @AutoMap()
   dealId: number;
 

@@ -11,6 +11,9 @@ export class ProductDto {
   readonly productName: string;
 
   @AutoMap()
+  readonly brandId: number;
+
+  @AutoMap()
   createAt: Date;
 
   @AutoMap()

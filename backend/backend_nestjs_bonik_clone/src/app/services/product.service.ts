@@ -19,9 +19,11 @@ export class ProductService {
 
   async findAll(
     paginationOptions?: IPaginationOptions,
+    options?: Record<string, any>,
   ): Promise<IPaginationResult<IProduct>> {
     return paginate<IProduct>(this.prisma.iProduct, {
       ...paginationOptions,
+      options,
       include: {
         flashDeal: true,
       },
@@ -118,6 +120,19 @@ export class ProductService {
         ['desc'],
       ),
       takeNumber,
+    );
+  }
+
+  async findAllByBrand(id: number, options: IPaginationOptions) {
+    return await this.findAll(
+      {
+        ...options,
+      },
+      {
+        where: {
+          brandId: id,
+        },
+      },
     );
   }
 }

@@ -103,4 +103,22 @@ export class ProductController {
       mapper.map(product, Product, ProductDto),
     );
   }
+
+  @Get('/brand/:id')
+  async getAllProductByBrand(
+    @Param('id', ParseIntPipe) brandId: number,
+    @Query() options?: IPaginationOptions,
+  ) {
+    const productResult = await this.productService.findAllByBrand(
+      brandId,
+      options,
+    );
+
+    return {
+      ...productResult,
+      items: productResult.items.map((item) =>
+        mapper.map(item, Product, ProductDto),
+      ),
+    };
+  }
 }
