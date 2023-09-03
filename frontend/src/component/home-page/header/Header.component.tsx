@@ -8,7 +8,6 @@ import UserAccount from "./user-account/UserAccount.component";
 import ShoppingCart from "./shopping-cart/ShoppingCart.component";
 import CategoryMenu from "./category-menu/CategoryMenu.component";
 import SliderBanner from "./slider/SliderBanner.component";
-import TemplateBanner from "./slider/TemplateBanner.component";
 
 const Header: FC = () => {
   return (
