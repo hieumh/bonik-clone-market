@@ -20,17 +20,17 @@ const products: IProduct[] = [
 const FlashDeals: FC<IFlashDeals> = () => {
   return (
     <Box>
-      <Stack flexDirection="row" gap="4px" alignItems="center" mb="24px">
+      <Stack flexDirection="row" gap=".25rem" alignItems="center" mb="1.5rem">
         <img
           src={flashDealSvg}
           alt="flash deal"
           style={{
-            width: "24px",
-            height: "24px",
+            width: "1.5rem",
+            height: "1.5rem",
           }}
         />
 
-        <Typography fontSize="25px" fontWeight="bold">
+        <Typography fontSize="1.625rem" fontWeight="bold">
           Flash Deals
         </Typography>
       </Stack>

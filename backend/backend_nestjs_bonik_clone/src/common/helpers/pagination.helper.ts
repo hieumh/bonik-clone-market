@@ -15,9 +15,9 @@ export interface IPaginationResult<T> {
 // TODO: add type to query, options
 export async function paginate<T>(
   query: any,
-  options: IPaginationOptions & Record<string, unknown>,
+  options: Partial<IPaginationOptions> & Record<string, unknown>,
 ): Promise<IPaginationResult<T>> {
-  const { page, pageSize, ...rest } = options;
+  const { page = 0, pageSize = 10, ...rest } = options;
 
   if ((isNil(page) && !isNil(pageSize)) || (isNil(pageSize) && !isNil(page))) {
     throw new BadRequestException();

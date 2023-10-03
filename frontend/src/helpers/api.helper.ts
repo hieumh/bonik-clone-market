@@ -1,17 +1,26 @@
-import axios, { AxiosRequestConfig } from "axios";
+import { TOKEN_STORE_KEY } from "@/constants/common.constant";
+import axios, { AxiosHeaders, AxiosRequestConfig } from "axios";
 
 const baseUrl = "http://localhost:3000/";
 
-const populateConfig = (config: any): AxiosRequestConfig => {
+enum EHttpMethod {
+  GET = "get",
+  POST = "post",
+  PUT = "put",
+  PATCH = "patch",
+  DELETE = "delete",
+}
+
+const populateConfig = (config: AxiosRequestConfig): AxiosRequestConfig => {
   const additionalConfig: AxiosRequestConfig = {
     baseURL: baseUrl,
     withCredentials: true,
     headers: {
-      "Access-Control-Allow-Origin": "*", // Replace '*' with your allowed origin(s) if necessary
+      "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods":
-        "GET, HEAD, PUT, PATCH, POST, DELETE, OPTION", // Specify allowed HTTP methods
+        "GET, HEAD, PUT, PATCH, POST, DELETE, OPTION",
       "Access-Control-Allow-Headers":
-        "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With", // Specify allowed request headers
+        "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With",
     },
   };
 
@@ -22,12 +31,30 @@ const populateConfig = (config: any): AxiosRequestConfig => {
 };
 
 export const ApiHelper = {
-  get: (url: string, config?: AxiosRequestConfig) =>
-    axios.get(url, populateConfig(config)),
-  post: (url: string, config?: AxiosRequestConfig) =>
-    axios.post(url, populateConfig(config)),
-  put: (url: string, config?: AxiosRequestConfig) =>
-    axios.put(url, populateConfig(config)),
-  delete: (url: string, config?: AxiosRequestConfig) =>
-    axios.delete(url, populateConfig(config)),
+  get: (url: string, config: AxiosRequestConfig = {}) =>
+    axios(
+      url,
+      populateConfig({
+        ...config,
+        method: EHttpMethod.GET,
+      })
+    ),
+  post: (url: string, config: AxiosRequestConfig = {}) =>
+    axios(
+      url,
+      populateConfig({
+        ...config,
+        method: EHttpMethod.POST,
+      })
+    ),
+  put: (url: string, config: AxiosRequestConfig = {}) =>
+    axios(
+      url,
+      populateConfig({
+        ...config,
+        method: EHttpMethod.PUT,
+      })
+    ),
+  delete: (url: string, config: AxiosRequestConfig = {}) =>
+    axios(url, populateConfig({ ...config, method: EHttpMethod.DELETE })),
 };

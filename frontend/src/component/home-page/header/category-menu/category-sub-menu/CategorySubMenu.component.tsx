@@ -25,7 +25,7 @@ const ItemOption: FC<IItemOption> = ({ title, contents }) => {
 const CategorySubMenu: FC<ICategorySubMenu> = () => {
   return (
     <Card>
-      <Grid container spacing={2} padding="16px">
+      <Grid container spacing={2} padding="1rem">
         {FASHION_CATEGORIES.map((category) => (
           <Grid key={category.name} item xs={3}>
             <ItemOption title={category.name} contents={category.children} />

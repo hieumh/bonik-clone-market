@@ -1,4 +1,10 @@
-import { Controller, Get, Injectable, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Injectable,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { CategoryService } from '../services/category.service';
 import { ProductService } from '../services/product.service';
 import {
@@ -8,9 +14,11 @@ import {
 import { MapInterceptor } from '@automapper/nestjs';
 import { Category } from '../models/category.model';
 import { CategoryDto } from '../dtos/category.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Injectable()
 @Controller('category')
+@UseGuards(AuthGuard('jwt'))
 export class CategoryController {
   constructor(
     private readonly categoryService: CategoryService,

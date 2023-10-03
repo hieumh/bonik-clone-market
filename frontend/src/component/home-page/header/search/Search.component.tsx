@@ -7,7 +7,6 @@ import {
   SelectChangeEvent,
   Box,
   SelectProps,
-  Theme,
 } from "@mui/material";
 import { debounce } from "lodash";
 import { useQuery } from "@tanstack/react-query";
@@ -17,9 +16,9 @@ import { CATEGORIES } from "../header.constant";
 import { COLORS } from "@/constants/ui.constant";
 
 const StyledSelect = styled(Select)({
-  minWidth: "130px",
-  border: `1px solid ${COLORS.white}`,
-  borderRadius: "4px 40px 40px 4px",
+  minWidth: "8.125rem",
+  border: `.0625rem solid ${COLORS.white}`,
+  borderRadius: ".25rem 2.5rem 2.5rem .25rem",
   outline: "none",
 
   "& .MuiOutlinedInput-notchedOutline": {
@@ -27,13 +26,13 @@ const StyledSelect = styled(Select)({
     borderColor: "transparent",
   },
   "&:hover .MuiOutlinedInput-notchedOutline": {
-    border: `1px solid ${COLORS.baseColor}`,
-    borderRadius: "4px 40px 40px 4px",
+    border: `.0625rem solid ${COLORS.primary}`,
+    borderRadius: ".25rem 2.5rem 2.5rem .25rem",
     outline: "none",
   },
   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    border: `1px solid ${COLORS.baseColor}`,
-    borderRadius: "4px 40px 40px 4px",
+    border: `.0625rem solid ${COLORS.primary}`,
+    borderRadius: ".25rem 2.5rem 2.5rem .25rem",
     outline: "none",
   },
 });
@@ -44,22 +43,22 @@ const StyledBox = styled(Box)(
   }: SelectProps<unknown> & {
     isHoverSearch: boolean;
   }) => ({
-    height: "40px",
-    minWidth: "600px",
-    borderRadius: "40px",
+    height: "2.5rem",
+    minWidth: "37.5rem",
+    borderRadius: "2.5rem",
 
     display: "flex",
     flexDirection: "row",
     border: isHoverSearch
-      ? `1px solid ${COLORS.baseColor}`
-      : `1px solid ${COLORS.white}`,
+      ? `.0625rem solid ${COLORS.primary}`
+      : `.0625rem solid ${COLORS.white}`,
   })
 );
 
 const StyledSearch = styled(TextField)({
   border: "none",
   "& input": {
-    marginLeft: "10px",
+    marginLeft: ".625rem",
   },
   borderColor: "transparent",
   "& fieldset": {

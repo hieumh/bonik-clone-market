@@ -16,6 +16,7 @@ import { BrandDto } from './app/dtos/brand.dto';
 import { Brand } from './app/models/brand.model';
 import { User } from './app/models/user.model';
 import { UserDto } from './app/dtos/user.dto';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -26,6 +27,7 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
+  app.use(cookieParser());
 
   createMap(
     mapper,

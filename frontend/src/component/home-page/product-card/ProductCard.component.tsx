@@ -20,24 +20,24 @@ const ProductCard: FC<IProductCard> = ({ product }) => {
   return (
     <Card
       sx={{
-        width: "282px",
-        mx: "12px",
-        height: "392px",
+        width: "17.625rem",
+        mx: ".75rem",
+        height: "24.5rem",
       }}
     >
       <CardMedia
         component="img"
-        height="282px"
+        height="17.625rem"
         image="https://cdn.pixabay.com/photo/2023/08/26/15/21/mushroom-8215265_1280.jpg"
       />
 
       <CardContent
         sx={{
-          padding: "16px",
+          padding: "1rem",
         }}
       >
         <Typography
-          fontSize="14px"
+          fontSize=".875rem"
           noWrap
           sx={{
             overflow: "hidden",
@@ -55,13 +55,13 @@ const ProductCard: FC<IProductCard> = ({ product }) => {
           readOnly
         />
 
-        <Stack flexDirection="row" gap="6px">
+        <Stack flexDirection="row" gap=".375rem">
           {/* sale price */}
-          <Typography color={COLORS.baseColor}>{product.price} US$</Typography>
+          <Typography color={COLORS.primary}>{product.price} US$</Typography>
 
           {/* real price */}
           <Typography
-            color={COLORS.textDelete}
+            color={COLORS.textGrey}
             sx={{
               textDecoration: "line-through",
             }}
