@@ -16,8 +16,9 @@
                 "tsconfig-paths/register"
             ],
             "sourceMaps": true,
+            "envFile": "${workspaceFolder}/backend/backend_nestjs_bonik_clone/.env",
             "cwd": "${workspaceRoot}/backend/backend_nestjs_bonik_clone",
-            "protocol": "inspector"
+            "console": "integratedTerminal",
         }
     ]
 }
