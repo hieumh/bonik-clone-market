@@ -1,5 +1,4 @@
 import { FC, Ref, useRef } from "react";
-import StyledButton from "@/common/button/StyledButton.component";
 import WidgetsIcon from "@mui/icons-material/Widgets";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {
@@ -10,6 +9,7 @@ import {
   Stack,
   ListItemButton,
   Box,
+  Button,
 } from "@mui/material";
 import { CATEGORY_MENU } from "../header.constant";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -34,34 +34,31 @@ const CategoryMenu: FC = () => {
     <Stack
       sx={{
         position: "relative",
-        maxWidth: "300px",
+        maxWidth: "18.75rem",
       }}
     >
       <Stack
         flexDirection="column"
         alignItems="flex-start"
-        gap="8px"
+        gap=".5rem"
         ref={categoriesRef}
       >
-        <StyledButton
-          startIcon={<WidgetsIcon />}
-          endIcon={<KeyboardArrowDownIcon />}
-        >
+        <Button startIcon={<WidgetsIcon />} endIcon={<KeyboardArrowDownIcon />}>
           Categories
-        </StyledButton>
+        </Button>
 
         <Card
           sx={{
-            width: "280px",
+            width: "17.5rem",
           }}
         >
           <List
             sx={{
               position: "absolute",
-              top: "50px",
+              top: "3.125rem",
               width: `${categoriesRef.current?.clientWidth}px`,
               boxShadow:
-                "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)",
+                "0 .25rem .375rem rgba(0, 0, 0, 0.1), 0 .0625rem .1875rem rgba(0, 0, 0, 0.08)",
             }}
           >
             {CATEGORY_MENU.map((menuItem, idx) => (
@@ -72,14 +69,14 @@ const CategoryMenu: FC = () => {
                 onMouseEnter={handleHover(idx)}
                 onMouseLeave={handleLeave}
               >
-                <ListItemIcon sx={{ minWidth: "40px" }}>
+                <ListItemIcon sx={{ minWidth: "2.5rem" }}>
                   {menuItem.icon}
                 </ListItemIcon>
 
                 <ListItemText
                   sx={{
                     "& span": {
-                      fontSize: "14px",
+                      fontSize: ".875rem",
                     },
                   }}
                 >
@@ -102,14 +99,14 @@ const CategoryMenu: FC = () => {
             (currentMenuIdx as number) *
             (listItemRef?.current?.clientHeight || 0)
           }
-          width="500px"
+          width="31.25rem"
           left={
             categoriesRef.current?.clientWidth
               ? categoriesRef.current?.clientWidth + 2 + "px"
               : 0
           }
           onMouseEnter={handleEnterChild}
-          borderRadius="4px"
+          borderRadius=".25rem"
           onMouseLeave={handleLeaveChild}
           zIndex={10000}
         >

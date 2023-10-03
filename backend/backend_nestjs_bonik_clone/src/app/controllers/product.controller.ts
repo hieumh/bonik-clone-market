@@ -5,6 +5,7 @@ import {
   Param,
   ParseIntPipe,
   Query,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { ProductService } from '../services/product.service';
@@ -25,9 +26,12 @@ import {
 import { IPaginationOptions } from 'src/common/helpers/pagination.helper';
 import { JoiValidationPipe } from 'src/common/middlewares/pipes/joi-validation.pipe';
 import { paginationSchema } from 'src/common/interfaces/common.interface';
+import { CacheTTL } from '@nestjs/cache-manager';
+import { AuthGuard } from '@nestjs/passport';
 
 @Injectable()
 @Controller('product')
+@UseGuards(AuthGuard('jwt'))
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
@@ -40,6 +44,7 @@ export class ProductController {
   }
 
   @Get()
+  @CacheTTL(60)
   @UsePipes(new JoiValidationPipe(paginationSchema))
   async getAllProduct(
     @Query() paginationOptions: IPaginationOptions,
@@ -55,6 +60,7 @@ export class ProductController {
   }
 
   @Get('/flash-deal')
+  @CacheTTL(60)
   @UsePipes(new JoiValidationPipe(paginationSchema))
   async getProductByFlashDeals(
     @Query() paginationOptions: IPaginationOptions,

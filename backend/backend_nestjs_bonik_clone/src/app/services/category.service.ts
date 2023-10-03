@@ -14,14 +14,15 @@ export class CategoryService {
     return await this.prismaClient.iCategory.findMany();
   }
 
-  async findTopCategory(noOfTopCategory = 3): Promise<Array<ICategory>> {
+  async findTopCategory(noOfTopCategory = 3): Promise<Array<ICategory | null>> {
     const allCategories = await this.findAllCategory();
     const topBestSellerProduct = await this.productService.findTopBestSeller();
 
     const topCategory = take(
       map(
         uniq(topBestSellerProduct.map((product) => product.categoryId)),
-        (id) => find(allCategories, (category) => category.id === id),
+        (id) =>
+          find(allCategories, (category) => category.categoryId === id) || null,
       ),
       noOfTopCategory,
     );

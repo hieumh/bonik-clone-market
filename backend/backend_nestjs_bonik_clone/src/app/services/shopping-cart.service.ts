@@ -24,7 +24,7 @@ export class ShoppingCartService {
     });
   }
 
-  async findCart(id: number): Promise<IShoppingCart> {
+  async findCart(id: number): Promise<IShoppingCart | null> {
     return await this.prisma.iShoppingCart.findFirst({
       where: {
         cartId: Number(id),
@@ -48,7 +48,7 @@ export class ShoppingCartService {
     });
   }
 
-  async findCartProduct(cartProductId: number): Promise<ICartProduct> {
+  async findCartProduct(cartProductId: number): Promise<ICartProduct | null> {
     return await this.prisma.iCartProduct.findFirst({
       where: {
         cartProductId,

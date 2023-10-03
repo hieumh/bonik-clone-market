@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { THandler } from '../model/common.model';
+import { useState } from "react";
+import { THandler } from "../model/common.model";
 
 interface IReturnUseModal {
   open: boolean;
@@ -12,11 +12,11 @@ const useModal = (initState: boolean): IReturnUseModal => {
   const [open, setOpen] = useState<boolean>(initState || false);
 
   const closeModal = () => {
-    setOpen(true);
+    setOpen(false);
   };
 
   const openModal = () => {
-    setOpen(false);
+    setOpen(true);
   };
 
   const toggleModal = () => {

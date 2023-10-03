@@ -1,18 +1,11 @@
 import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
 import TemplateBanner from "./TemplateBanner.component";
 import { Box, Radio, Stack } from "@mui/material";
-import { IBanner, ITemplateBanner } from "./banner.model";
+import { ITemplateBanner } from "./banner.model";
 
 interface ISliderBannerProps {
   banners?: ITemplateBanner[];
 }
-
-// const Slider = styled(Box)(() => ({
-//   position: "relative",
-//   overflow: "false",
-// }));
-
-// cần một template để có thể điều chỉnh nếu muốn, tuy nhiên vẫn nhận cùng value
 
 const SliderBanner: FC<ISliderBannerProps> = ({ banners = [] }) => {
   const [transform, setTransform] = useState<number>(0);
@@ -68,7 +61,7 @@ const SliderBanner: FC<ISliderBannerProps> = ({ banners = [] }) => {
         flexDirection="row"
         justifyContent="center"
         position="absolute"
-        bottom="20px"
+        bottom="1.25rem"
         right="0"
         left="0"
       >

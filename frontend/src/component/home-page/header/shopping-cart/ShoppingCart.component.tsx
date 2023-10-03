@@ -1,6 +1,6 @@
 import { FC } from "react";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
-import StyledIconButton from "@/common/button/StyledIconButon.component";
+import StyledIconButton from "@/common/button/StyledIconButton.component";
 
 const ShoppingCart: FC = () => {
   return (

@@ -7,10 +7,10 @@ import {
   ListItemIcon,
   Typography,
   ListItem,
+  Button,
 } from "@mui/material";
 import { FC } from "react";
 import { TMenuOption } from "../../header.model";
-import StyledButton from "@/common/button/StyledButton.component";
 import useMenu from "@/hooks/use-menu.hook";
 import useMenuMulti from "@/hooks/use-menu-multi.hook";
 import { isEmpty } from "lodash";
@@ -36,13 +36,13 @@ const Page: FC<TMenuOption> = ({ title, children = [] }) => {
         position: "relative",
       }}
     >
-      <StyledButton onMouseEnter={handleOpen}>{title}</StyledButton>
+      <Button onMouseEnter={handleOpen}>{title}</Button>
 
       {Boolean(children.length) && isOpen && (
         <Card
           sx={{
             position: "absolute",
-            width: "150px",
+            width: "9.375rem",
             zIndex: "10000",
           }}
         >
@@ -52,8 +52,8 @@ const Page: FC<TMenuOption> = ({ title, children = [] }) => {
                 key={childPage.title}
                 secondaryAction={
                   !isEmpty(childPage.children) ? (
-                    <ListItemIcon sx={{ minWidth: "24px" }}>
-                      {<ChevronRightIcon sx={{ maxWidth: "24px" }} />}
+                    <ListItemIcon sx={{ minWidth: "1.5rem" }}>
+                      {<ChevronRightIcon sx={{ maxWidth: "1.5rem" }} />}
                     </ListItemIcon>
                   ) : null
                 }
@@ -66,7 +66,7 @@ const Page: FC<TMenuOption> = ({ title, children = [] }) => {
                   <ListItemText
                     sx={{
                       "& span": {
-                        fontSize: "14px",
+                        fontSize: ".875rem",
                         whiteSpace: "nowrap",
                       },
                     }}
@@ -88,14 +88,14 @@ const Page: FC<TMenuOption> = ({ title, children = [] }) => {
               (listItemRef?.current?.clientHeight || 0) +
             12
           }
-          left="149px"
+          left="9.3125rem"
           onMouseEnter={handleEnterChild}
           onMouseLeave={handleLeaveChild}
           sx={{
-            borderRadius: "4px",
-            padding: "6px 10px",
+            borderRadius: ".25rem",
+            padding: ".375rem .625rem",
             boxShadow:
-              "0px 2px 6px rgba(0, 0, 0, 0.1), 0px 4px 12px rgba(0, 0, 0, 0.1)",
+              "0rem .125rem .375rem rgba(0, 0, 0, 0.1), 0rem .25rem .75rem rgba(0, 0, 0, 0.1)",
           }}
           zIndex={10000}
         >

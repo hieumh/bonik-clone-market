@@ -9,3 +9,10 @@ export interface ITokenResponse {
   access_token: string;
   refresh_token: string;
 }
+
+export interface JwtPayload {
+  sub: number;
+  username: string;
+  iat: string;
+  exp: number;
+}

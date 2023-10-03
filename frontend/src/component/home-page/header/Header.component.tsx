@@ -11,12 +11,12 @@ import SliderBanner from "./slider/SliderBanner.component";
 
 const Header: FC = () => {
   return (
-    <Stack flexDirection="column" gap="8px" marginTop="8px">
+    <Stack flexDirection="column" gap=".5rem" marginTop=".5rem">
       <Stack
         flexDirection="row"
         justifyContent="space-between"
         alignItems="center"
-        height="80px"
+        height="5rem"
       >
         <div>
           <img src={Logo} alt="logo" />
@@ -24,7 +24,7 @@ const Header: FC = () => {
 
         <Search />
 
-        <Stack flexDirection="row" gap="20px">
+        <Stack flexDirection="row" gap="1.25rem">
           <UserAccount />
 
           <ShoppingCart />

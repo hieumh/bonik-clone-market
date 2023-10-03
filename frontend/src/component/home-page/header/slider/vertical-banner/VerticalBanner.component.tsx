@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { IBanner } from "../banner.model";
-import { Stack, Typography } from "@mui/material";
-import StyledButtonRed from "@/common/button/StyledButtonRed.component";
+import { Button, Stack, Typography } from "@mui/material";
 
 const VerticalBanner: FC<IBanner> = ({
   title,
@@ -14,7 +13,7 @@ const VerticalBanner: FC<IBanner> = ({
       flexDirection="row"
       sx={{
         minWidth: "100%",
-        paddingY: "16px",
+        paddingY: "1rem",
       }}
       alignItems="center"
     >
@@ -22,7 +21,7 @@ const VerticalBanner: FC<IBanner> = ({
         flexDirection="column"
         justifyContent="flex-start"
         flexBasis="70%"
-        gap="10px"
+        gap=".625rem"
       >
         <Typography variant="h3" fontWeight="bold">
           {title}
@@ -30,15 +29,16 @@ const VerticalBanner: FC<IBanner> = ({
 
         <Typography variant="body1">{description}</Typography>
 
-        <StyledButtonRed
+        <Button
           fullWidth={false}
           onClick={handleShopNow}
+          variant="contained"
           sx={{
             alignSelf: "flex-start",
           }}
         >
           Shop now
-        </StyledButtonRed>
+        </Button>
       </Stack>
 
       <img src={href} alt="current product" style={{ flexBasis: "30%" }} />

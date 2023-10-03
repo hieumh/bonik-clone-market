@@ -1,5 +1,6 @@
 export const COLORS = {
-  baseColor: "#D23F57",
-  textDelete: "#7d879c",
+  primary: "#D23F57",
+  textGrey: "#7d879c",
   white: "#dfdfdf",
+  text: "#000000",
 };

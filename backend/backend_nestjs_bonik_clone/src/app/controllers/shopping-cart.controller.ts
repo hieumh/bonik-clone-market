@@ -6,6 +6,7 @@ import {
   Injectable,
   Query,
   UsePipes,
+  UseGuards,
 } from '@nestjs/common';
 import { ShoppingCartService } from '../services/shopping-cart.service';
 import { EUpdateQuantity } from 'src/common/constants/common.constant';
@@ -17,9 +18,11 @@ import { JoiValidationPipe } from 'src/common/middlewares/pipes/joi-validation.p
 import { shoppingCartMappingSchema } from 'src/common/interfaces/category.interface';
 import { paginationSchema } from 'src/common/interfaces/common.interface';
 import { IPaginationOptions } from 'src/common/helpers/pagination.helper';
+import { AuthGuard } from '@nestjs/passport';
 
 @Injectable()
 @Controller('shopping-cart')
+@UseGuards(AuthGuard('jwt'))
 export class ShoppingCartController {
   constructor(private readonly shoppingCardService: ShoppingCartService) {}
 

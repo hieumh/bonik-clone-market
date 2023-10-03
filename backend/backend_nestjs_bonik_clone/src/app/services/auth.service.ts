@@ -14,13 +14,25 @@ export class AuthService {
     private readonly userService: UserService,
   ) {}
 
-  async validateUser(username: string, pass: string): Promise<User> {
-    const user = await this.userService.findOne(username);
+  async validateUserById(id: number): Promise<User | null> {
+    const user = await this.userService.findOneById(id);
     if (!user) {
       throw new NotAcceptableException("Couldn't find user");
     }
 
-    if (user && (await compare(pass, user.password))) {
+    return user;
+  }
+
+  async validateUser(
+    emailOrPhoneNumber: string,
+    password: string,
+  ): Promise<User | null> {
+    const user = await this.userService.findOne(emailOrPhoneNumber);
+    if (!user) {
+      throw new NotAcceptableException("Couldn't find user");
+    }
+
+    if (user && (await compare(password, user.password))) {
       return user;
     }
 
@@ -39,7 +51,7 @@ export class AuthService {
   }
 
   async register(user: IRegister): Promise<User> {
-    const saltOrRounds = +jwtConstants.saltOrRound;
+    const saltOrRounds = +(jwtConstants.saltOrRound as string);
     const userEncryptPassword = {
       ...user,
       password: await hash(user.password, saltOrRounds),
@@ -53,7 +65,7 @@ export class AuthService {
     const { refresh_token: refreshToken } = tokenCombine;
     await this.jwtService.verify(refreshToken);
 
-    const decodedToken = await this.jwtService.decode(refreshToken);
+    const decodedToken = (await this.jwtService.decode(refreshToken)) || {};
     const sub = decodedToken['sub'];
     const username = decodedToken['username'];
 

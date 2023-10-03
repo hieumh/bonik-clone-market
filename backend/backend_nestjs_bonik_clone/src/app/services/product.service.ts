@@ -8,7 +8,6 @@ import {
   IPaginationResult,
   paginate,
 } from 'src/common/helpers/pagination.helper';
-
 @Injectable()
 export class ProductService {
   constructor(private readonly prisma: PrismaClient) {}
@@ -20,7 +19,7 @@ export class ProductService {
   async findAll(
     paginationOptions?: IPaginationOptions,
     options?: Record<string, any>,
-  ): Promise<IPaginationResult<IProduct>> {
+  ): Promise<IPaginationResult<IProduct & { flashDeal?: IFlashDeal }>> {
     return paginate<IProduct>(this.prisma.iProduct, {
       ...paginationOptions,
       options,
@@ -105,14 +104,14 @@ export class ProductService {
   }
 
   async findBigDiscounts(takeNumber: number): Promise<Array<IProduct>> {
-    const allProducts = await this.findAll();
+    const pagingProducts = await this.findAll();
 
     return take(
       orderBy(
-        map(allProducts, (product) => ({
+        map(pagingProducts.items, (product) => ({
           ...product,
           salePercent: getPercentOfFirstNum(
-            product.price - product.flashDeal.dealPrice,
+            product.price - (product?.flashDeal?.dealPrice || 0),
             product.price,
           ),
         })),
@@ -123,17 +122,12 @@ export class ProductService {
     );
   }
 
-  async findAllByBrand(id: number, options: IPaginationOptions) {
-    return await this.findAll(
-      {
-        ...options,
+  async findAllByBrand(id: number, options?: IPaginationOptions) {
+    return await this.findAll(options, {
+      where: {
+        brandId: id,
       },
-      {
-        where: {
-          brandId: id,
-        },
-      },
-    );
+    });
   }
 
   async search(searchText: string, categoryId: number): Promise<IProduct[]> {
