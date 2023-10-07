@@ -1,0 +1,189 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "globals": {
+    "React": true,
+    "render": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "jsx-a11y",
+    "prettier",
+    "react",
+    "react-hooks"
+  ],
+  "rules": {
+    "@typescript-eslint/no-shadow": [
+      "error"
+    ],
+    "@typescript-eslint/no-use-before-define": [
+      "error"
+    ],
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "all"
+      }
+    ],
+    "arrow-parens": "off",
+    "comma-dangle": "off",
+    "implicit-arrow-linebreak": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
+    "function-paren-newline": "off",
+    "no-restricted-globals": [
+      "error",
+      "fdescribe",
+      "fit"
+    ],
+    "no-use-before-define": "off",
+    "object-shorthand": [
+      "warn",
+      "always"
+    ],
+    "prefer-const": "warn",
+    "prefer-destructuring": "warn",
+    "linebreak-style": "off",
+    "lines-between-class-members": "off",
+    "space-before-function-paren": [
+      "warn",
+      {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ],
+    "import/extensions": "off",
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "groups": [
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "components/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "consts/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "helpers/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "locales/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "models/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "store/**",
+            "group": "internal"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": [
+          "react",
+          "react**"
+        ],
+        "newlines-between": "ignore"
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "import/no-unresolved": "off",
+    "no-shadow": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 120,
+        "arrowParens": "avoid",
+        "semi": true,
+        "singleQuote": true,
+        "tabWidth": 2,
+        "trailingComma": "none",
+        "endOfLine": "auto"
+      }
+    ],
+    "react/destructuring-assignment": "off",
+    "react/display-name": "off",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".tsx"
+        ]
+      }
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-sort-props": [
+      "error",
+      {
+        "callbacksLast": true,
+        "shorthandFirst": true,
+        "ignoreCase": true,
+        "noSortAlphabetically": true,
+        "reservedFirst": true
+      }
+    ],
+    "react/jsx-wrap-multilines": [
+      "error",
+      {}
+    ],
+    "react/no-deprecated": "warn",
+    "react/no-access-state-in-setstate": "warn",
+    "react/prefer-stateless-function": "off",
+    "react/prop-types": "off",
+    "react/require-default-props": "off",
+    "react/static-property-placement": "off"
+  }
+}

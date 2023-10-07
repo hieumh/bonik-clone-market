@@ -12,6 +12,10 @@ export type TTopBestCategories = Promise<
 >;
 
 export const shoppingCartMappingSchema = Joi.object({
-  cartProductId: Joi.number().required(),
-  type: Joi.string().required(),
+  quantity: Joi.number().min(0).required(),
+});
+
+export const shoppingCartSchema = Joi.object({
+  productId: Joi.number().required(),
+  quantity: Joi.number().required(),
 });

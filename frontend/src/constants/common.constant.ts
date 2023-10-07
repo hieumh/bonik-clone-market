@@ -7,3 +7,7 @@ export const ERROR_MESSAGES = {
 };
 
 export const TOKEN_STORE_KEY = "token-store-key";
+
+export const AUTHENTICATION_FAILED = "Authentication failed";
+
+export const SOMETHING_WENT_WRONG = "Something went wrong";

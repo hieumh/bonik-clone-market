@@ -8,7 +8,7 @@ interface IReturnUseModal {
   toggleModal: THandler;
 }
 
-const useModal = (initState: boolean): IReturnUseModal => {
+const useModal = (initState?: boolean): IReturnUseModal => {
   const [open, setOpen] = useState<boolean>(initState || false);
 
   const closeModal = () => {

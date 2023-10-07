@@ -7,7 +7,6 @@ import LoginForm from "./login-dialog/LoginForm.component";
 
 const UserAccount: FC = () => {
   const { open, closeModal, openModal } = useModal(false);
-  console.log("open here", open);
 
   return (
     <div>
@@ -15,8 +14,8 @@ const UserAccount: FC = () => {
         <PersonIcon />
       </StyledIconButton>
 
-      <Dialog open={open} onClose={closeModal}>
-        <LoginForm />
+      <Dialog open={open}>
+        <LoginForm closeDialog={closeModal} />
       </Dialog>
     </div>
   );

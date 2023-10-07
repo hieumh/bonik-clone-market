@@ -10,12 +10,13 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { loginRequest } from "./login.helper";
 import { ILoginForm } from "./login.model";
 import { LOGIN_KEY } from "@/constants/server-state.constant";
 import {
+  AUTHENTICATION_FAILED,
   ERROR_MESSAGES,
   emailRegex,
   phoneRegex,
@@ -23,16 +24,27 @@ import {
 import { COLORS } from "@/constants/ui.constant";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
+import { THandler } from "@/model/common.model";
+import { AxiosError } from "axios";
 
-interface ILoginFormProp {}
+interface ILoginFormProp {
+  closeDialog: THandler;
+}
 
-const LoginForm: FC<ILoginFormProp> = () => {
+const LoginForm: FC<ILoginFormProp> = ({ closeDialog }) => {
+  const [error, setError] = useState<string | null>(null);
   const { control, handleSubmit } = useForm<ILoginForm>({
     mode: "onSubmit",
   });
   const { isLoading, mutate } = useMutation({
     mutationFn: loginRequest,
     mutationKey: [LOGIN_KEY],
+    onSuccess: () => {
+      closeDialog();
+    },
+    onError: (_: AxiosError) => {
+      setError(AUTHENTICATION_FAILED);
+    },
   });
 
   const handleOnSubmit = (dataForm: ILoginForm) => {
@@ -120,6 +132,8 @@ const LoginForm: FC<ILoginFormProp> = () => {
               )}
             />
           </Box>
+
+          <Typography color={COLORS.error}>{error}</Typography>
 
           <Button
             type="submit"

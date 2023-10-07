@@ -1,12 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { ICartProduct, IShoppingCart, PrismaClient } from '@prisma/client';
-import { NotFoundDataException } from 'src/common/exceptions/not-found-data.exception';
-import { EUpdateQuantity } from 'src/common/constants/common.constant';
+import { ConflictException, Injectable } from '@nestjs/common';
+import { ICartProduct, PrismaClient } from '@prisma/client';
+import { NotFoundDataException } from 'src/common/exceptions/http-exception/not-found-data.exception';
 import {
   IPaginationOptions,
   IPaginationResult,
   paginate,
 } from 'src/common/helpers/pagination.helper';
+import { isEmpty, isNil } from 'lodash';
+import { TShoppingCartCreate } from '../models/shopping-cart.model';
 
 @Injectable()
 export class ShoppingCartService {
@@ -19,36 +20,40 @@ export class ShoppingCartService {
       ...paginationOptions,
       include: {
         product: true,
-        shoppingCart: true,
       },
     });
   }
 
-  async findCart(id: number): Promise<IShoppingCart | null> {
-    return await this.prisma.iShoppingCart.findFirst({
+  async findCartProductByField(
+    cartProduct: Partial<ICartProduct>,
+  ): Promise<ICartProduct[]> {
+    return this.prisma.iCartProduct.findMany({
       where: {
-        cartId: Number(id),
+        ...cartProduct,
       },
     });
   }
 
-  async createCart(): Promise<IShoppingCart> {
-    return await this.prisma.iShoppingCart.create({
-      data: { closedOrder: false },
-    });
-  }
+  async createCartProduct(data: TShoppingCartCreate, userId: number) {
+    const { productId, quantity } = data;
 
-  async createCartProduct(data: Omit<ICartProduct, 'cartProductId'>) {
-    if (!this.findCart(data.cartId)) {
-      throw new NotFoundDataException();
+    if (!isEmpty(await this.findCartProductByField({ productId, userId }))) {
+      throw new ConflictException();
     }
 
     return await this.prisma.iCartProduct.create({
-      data,
+      data: {
+        productId,
+        quantity,
+        userId,
+        closeOrder: false,
+      },
     });
   }
 
-  async findCartProduct(cartProductId: number): Promise<ICartProduct | null> {
+  async findCartProductById(
+    cartProductId: number,
+  ): Promise<ICartProduct | null> {
     return await this.prisma.iCartProduct.findFirst({
       where: {
         cartProductId,
@@ -66,19 +71,16 @@ export class ShoppingCartService {
 
   async updateQuantityCartProduct(
     cartProductId: number,
-    type: EUpdateQuantity,
+    quantity: number,
   ): Promise<ICartProduct> {
-    const currentCartMapping = await this.findCartProduct(cartProductId);
+    const currentCartMapping = await this.findCartProductById(cartProductId);
 
     if (!currentCartMapping) {
       throw new NotFoundDataException();
     }
 
-    if (
-      type === EUpdateQuantity.DECREMENT &&
-      currentCartMapping.quantity - 1 === 0
-    ) {
-      return await this.deleteCartProduct(cartProductId);
+    if (quantity < 0 || isNil(quantity)) {
+      throw new ConflictException();
     }
 
     return await this.prisma.iCartProduct.update({
@@ -86,10 +88,7 @@ export class ShoppingCartService {
         cartProductId: currentCartMapping.cartProductId,
       },
       data: {
-        quantity:
-          type === EUpdateQuantity.INCREMENT
-            ? ++currentCartMapping.quantity
-            : currentCartMapping.quantity - 1,
+        quantity,
       },
     });
   }
