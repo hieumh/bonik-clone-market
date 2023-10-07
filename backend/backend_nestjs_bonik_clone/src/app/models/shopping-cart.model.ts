@@ -1,7 +1,3 @@
-import { IShoppingCart } from '@prisma/client';
+import { ICartProduct } from '@prisma/client';
 
-export class ShoppingCart implements IShoppingCart {
-  cartId: number;
-  closedOrder: boolean;
-  orderDate: Date;
-}
+export type TShoppingCartCreate = Pick<ICartProduct, 'productId' | 'quantity'>;

@@ -61,16 +61,9 @@ async function seed() {
       data: fakeFlashDeals,
     });
 
-    const shoppingCart = await prisma.iShoppingCart.create({
-      data: {
-        closedOrder: false,
-      },
-    });
-
     // Create a new cart product
     const cartProduct = await prisma.iCartProduct.create({
       data: {
-        cartId: shoppingCart.cartId,
         productId: products[0].productId,
         quantity: +faker.random.numeric(),
       },

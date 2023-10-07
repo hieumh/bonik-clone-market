@@ -72,6 +72,7 @@ const ContactBar: FC = () => {
         <StyledSelect
           variant="standard"
           size="small"
+          defaultValue="vn"
           onChange={handleSelectCountry}
         >
           <StyledMenuItem value="us">

@@ -32,5 +32,8 @@ export class Product implements IProduct {
   @AutoMap()
   rating: number;
 
+  @AutoMap()
+  srcImg: string;
+
   flashDeal: IFlashDeal;
 }

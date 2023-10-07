@@ -81,7 +81,7 @@ dependencies:
     specifier: ^1.0.0
     version: 1.0.0
   prisma:
-    specifier: ^4.16.1
+    specifier: ^4.16.2
     version: 4.16.2
   reflect-metadata:
     specifier: ^0.1.13

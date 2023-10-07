@@ -26,6 +26,7 @@ model IProduct {
   createAt         DateTime       @default(now())
   brandId          Int            @default(0)
   vendorId         Int            @default(0)
+  srcImg           String         @default("")
   cartProducts     ICartProduct[]
   flashDeal        IFlashDeal?
   brand            IBrand         @relation(fields: [brandId], references: [brandId])
@@ -48,26 +49,15 @@ model IFlashDeal {
   @@map("FlashDeal")
 }
 
-model IShoppingCart {
-  cartId       Int            @id @default(autoincrement())
-  closedOrder  Boolean
-  orderDate    DateTime?
-  cartProducts ICartProduct[]
-
-  @@map("ShoppingCart")
-}
-
 model ICartProduct {
-  cartProductId Int           @id @default(autoincrement())
-  cartId        Int
+  cartProductId Int      @id @default(autoincrement())
   productId     Int
   quantity      Int
-  userId        Int           @default(0)
-  shoppingCart  IShoppingCart @relation(fields: [cartId], references: [cartId])
-  product       IProduct      @relation(fields: [productId], references: [productId])
-  user          IUser         @relation(fields: [userId], references: [userId])
+  userId        Int      @default(0)
+  closeOrder    Boolean  @default(false)
+  product       IProduct @relation(fields: [productId], references: [productId])
+  user          IUser    @relation(fields: [userId], references: [userId])
 
-  @@index([cartId], map: "CartProduct_cartId_fkey")
   @@index([productId], map: "CartProduct_productId_fkey")
   @@map("CartProduct")
 }
