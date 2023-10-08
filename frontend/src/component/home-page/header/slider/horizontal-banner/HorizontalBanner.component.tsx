@@ -1,7 +1,12 @@
 import { FC } from "react";
-import { IBanner } from "../banner.model";
+import { IBannerProps } from "../banner.model";
 
-const HorizontalBanner: FC<IBanner> = ({ title, description, href }) => {
+const HorizontalBanner: FC<IBannerProps> = ({
+  title,
+  description,
+  handleShopNow,
+  href,
+}) => {
   return <>Horizontal banner</>;
 };
 

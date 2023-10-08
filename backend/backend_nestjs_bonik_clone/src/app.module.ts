@@ -12,6 +12,7 @@ import { ConfigModule } from '@nestjs/config';
 import { databaseConfig } from './config/database.config';
 import { ENV_FILE_PATH } from './config/configuration.config';
 import { AuthModule } from './app/modules/auth.module';
+import { BannerModule } from './app/modules/banner.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AuthModule } from './app/modules/auth.module';
     ProductModule,
     ShoppingCartModule,
     CategoryModule,
+    BannerModule,
     AutomapperModule.forRoot({
       strategyInitializer: classes(),
     }),

@@ -77,23 +77,6 @@ export class ProductController {
     };
   }
 
-  @Get('/banner')
-  @UsePipes(new JoiValidationPipe(paginationSchema))
-  async getBanner(
-    @Query() paginationOptions: IPaginationOptions,
-  ): TProductsPaginationResult {
-    const dataResponse = await this.productService.findAllByBanner(
-      paginationOptions,
-    );
-
-    return {
-      ...dataResponse,
-      items: dataResponse.items.map((product) =>
-        mapper.map(product, Product, ProductDto),
-      ),
-    };
-  }
-
   @Get('/top-ratings')
   async getTopRatings(
     @Param('take', ParseIntPipe) takeNumber = DEFAULT_NO_OF_TOP_RATINGS,

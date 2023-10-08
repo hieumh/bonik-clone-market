@@ -43,20 +43,24 @@ const CategoryMenu: FC = () => {
         gap=".5rem"
         ref={categoriesRef}
       >
-        <Button startIcon={<WidgetsIcon />} endIcon={<KeyboardArrowDownIcon />}>
+        <Button
+          color="secondary"
+          startIcon={<WidgetsIcon />}
+          endIcon={<KeyboardArrowDownIcon />}
+        >
           Categories
         </Button>
 
         <Card
           sx={{
-            width: "17.5rem",
+            minWidth: "17.5rem",
           }}
         >
           <List
             sx={{
               position: "absolute",
               top: "3.125rem",
-              width: `${categoriesRef.current?.clientWidth}px`,
+              minWidth: "17.5rem",
               boxShadow:
                 "0 .25rem .375rem rgba(0, 0, 0, 0.1), 0 .0625rem .1875rem rgba(0, 0, 0, 0.08)",
             }}

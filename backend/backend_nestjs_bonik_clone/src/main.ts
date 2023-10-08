@@ -17,6 +17,8 @@ import { Brand } from './app/models/brand.model';
 import { User } from './app/models/user.model';
 import { UserDto } from './app/dtos/user.dto';
 import * as cookieParser from 'cookie-parser';
+import { Banner } from './app/models/banner.model';
+import { BannerDto } from './app/dtos/banner.dto';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -60,6 +62,15 @@ async function bootstrap() {
   createMap(mapper, Category, CategoryDto);
   createMap(mapper, Brand, BrandDto);
   createMap(mapper, User, UserDto);
+  createMap(
+    mapper,
+    Banner,
+    BannerDto,
+    forMember(
+      (destination) => destination.product,
+      mapFrom((source) => source.product),
+    ),
+  );
 
   app.useGlobalFilters(
     new BadRequestExceptionFilter(),

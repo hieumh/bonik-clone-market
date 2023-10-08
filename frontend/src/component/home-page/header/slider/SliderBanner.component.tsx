@@ -1,13 +1,33 @@
-import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FC, useEffect, useMemo, useRef, useState } from "react";
 import TemplateBanner from "./TemplateBanner.component";
 import { Box, Radio, Stack } from "@mui/material";
-import { ITemplateBanner } from "./banner.model";
+import { IBannerResponse, ITemplateBanner } from "./banner.model";
+import { useQuery } from "@tanstack/react-query";
+import { getBanner } from "./slider.helper";
+import { BANNER_KEY } from "@/constants/server-state.constant";
 
-interface ISliderBannerProps {
-  banners?: ITemplateBanner[];
-}
+interface ISliderBannerProps {}
 
-const SliderBanner: FC<ISliderBannerProps> = ({ banners = [] }) => {
+const SliderBanner: FC<ISliderBannerProps> = () => {
+  const { data: banners = [], isFetched } = useQuery<IBannerResponse[]>({
+    queryFn: getBanner,
+    queryKey: [BANNER_KEY],
+    refetchOnWindowFocus: false,
+    initialData: [],
+  });
+  const bannerRemapped = useMemo(() => {
+    return banners.map(
+      (banner) =>
+        ({
+          type: "vertical",
+          title: banner.title,
+          description: banner.description,
+          href: banner?.product?.srcImg || "",
+          productId: banner.productId,
+        } as ITemplateBanner)
+    );
+  }, [banners]);
+
   const [transform, setTransform] = useState<number>(0);
   const parentBoxRef = useRef<HTMLDivElement>(null);
   const [currentId, setCurrentId] = useState<number>(0);
@@ -29,15 +49,18 @@ const SliderBanner: FC<ISliderBannerProps> = ({ banners = [] }) => {
   };
 
   useEffect(() => {
+    if (!isFetched) {
+      return;
+    }
     const interval = setInterval(nextSlide, 3000);
 
     return () => {
       clearInterval(interval);
     };
-  }, [currentId]);
+  }, [currentId, isFetched]);
 
   return (
-    <Box position="relative">
+    <Box position="relative" paddingBottom="2.625rem" minHeight="30rem">
       <Stack
         sx={{
           overflow: "hidden",
@@ -51,7 +74,7 @@ const SliderBanner: FC<ISliderBannerProps> = ({ banners = [] }) => {
             transform: `translateX(-${transform}px)`,
           }}
         >
-          {banners.map((banner, idx) => (
+          {bannerRemapped.map((banner, idx) => (
             <TemplateBanner key={idx} {...banner} />
           ))}
         </Stack>

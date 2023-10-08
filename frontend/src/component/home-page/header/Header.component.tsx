@@ -44,31 +44,10 @@ const Header: FC = () => {
       <Box
         sx={{
           marginLeft: "30%",
+          minHeight: "34rem",
         }}
       >
-        <SliderBanner
-          banners={[
-            {
-              type: "vertical",
-              title: "50% Off For Your First Shopping",
-              description: "abc",
-              href: "https://bonik-react.vercel.app/product/classic-rolex-watch",
-            },
-
-            {
-              type: "vertical",
-              title: "Hello word",
-              description: "abc",
-              href: "https://bonik-react.vercel.app/assets/images/products/apple-watch-0.png",
-            },
-            {
-              type: "vertical",
-              title: "Hello word",
-              description: "abc",
-              href: "https://bonik-react.vercel.app/assets/images/products/apple-watch-0.png",
-            },
-          ]}
-        />
+        <SliderBanner />
       </Box>
     </Stack>
   );
