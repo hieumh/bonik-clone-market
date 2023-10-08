@@ -26,9 +26,6 @@ dependencies:
   '@tanstack/react-query':
     specifier: ^4.20.4
     version: 4.20.4(react-dom@18.2.0)(react@18.2.0)
-  '@types/react-toastify':
-    specifier: ^4.1.0
-    version: 4.1.0(react-dom@18.2.0)(react@18.2.0)
   axios:
     specifier: ^1.2.2
     version: 1.2.2
@@ -70,6 +67,9 @@ devDependencies:
   '@testing-library/react':
     specifier: ^14.0.0
     version: 14.0.0(react-dom@18.2.0)(react@18.2.0)
+  '@types/lodash':
+    specifier: ^4.14.199
+    version: 4.14.199
   '@types/node':
     specifier: ^20.1.4
     version: 20.1.4
@@ -79,6 +79,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18.0.9
     version: 18.0.10
+  '@types/react-toastify':
+    specifier: ^4.1.0
+    version: 4.1.0(react-dom@18.2.0)(react@18.2.0)
   '@types/react-world-flags':
     specifier: ^1.4.2
     version: 1.4.2
@@ -2741,9 +2744,8 @@ packages:
       '@types/node': 20.1.4
     dev: true
 
-  /@types/lodash@4.14.191:
-    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
-    dev: false
+  /@types/lodash@4.14.199:
+    resolution: {integrity: sha512-Vrjz5N5Ia4SEzWWgIVwnHNEnb1UE1XMkvY5DGXrAeOGE9imk0hgTHh5GyDjLDJi9OTCn9oo9dXH1uToK1VRfrg==}
 
   /@types/node@20.1.4:
     resolution: {integrity: sha512-At4pvmIOki8yuwLtd7BNHl3CiWNbtclUbNtScGx4OHfBd4/oWoJC8KRCIxXwkdndzhxOsPXihrsOoydxBjlE9Q==}
@@ -2782,7 +2784,7 @@ packages:
     transitivePeerDependencies:
       - react
       - react-dom
-    dev: false
+    dev: true
 
   /@types/react-transition-group@4.4.5:
     resolution: {integrity: sha512-juKD/eiSM3/xZYzjuzH6ZwpP+/lejltmiS3QEzV/vmb/Q8+HfDmxu+Baga8UEMGBqV88Nbg4l2hY/K2DkyaLLA==}
@@ -3434,7 +3436,6 @@ packages:
   /clsx@1.2.1:
     resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
     engines: {node: '>=6'}
-    dev: false
 
   /co@4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
@@ -6345,7 +6346,6 @@ packages:
       clsx: 1.2.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /react-transition-group@4.4.5(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==}
@@ -7300,7 +7300,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       '@babel/runtime': 7.22.10
-      '@types/lodash': 4.14.191
+      '@types/lodash': 4.14.199
       lodash: 4.17.21
       lodash-es: 4.17.21
       nanoclone: 0.2.1

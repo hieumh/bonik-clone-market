@@ -40,18 +40,6 @@ export class ProductService {
     });
   }
 
-  // TODO: rewrite this service
-  async findAllByBanner(
-    paginationOptions?: IPaginationOptions,
-  ): Promise<IPaginationResult<IProduct>> {
-    return paginate(this.prisma.iProduct, {
-      ...paginationOptions,
-      include: {
-        flashDeal: true,
-      },
-    });
-  }
-
   async findTopBestSeller(): Promise<Array<IProduct>> {
     return await this.prisma.iProduct.findMany({
       orderBy: {

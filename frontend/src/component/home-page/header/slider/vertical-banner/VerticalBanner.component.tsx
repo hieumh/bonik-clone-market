@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { IBanner } from "../banner.model";
+import { IBanner, IBannerProps } from "../banner.model";
 import { Button, Stack, Typography } from "@mui/material";
 
-const VerticalBanner: FC<IBanner> = ({
+const VerticalBanner: FC<IBannerProps> = ({
   title,
   description,
   handleShopNow,

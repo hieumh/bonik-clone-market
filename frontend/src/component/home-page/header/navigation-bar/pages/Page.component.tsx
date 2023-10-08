@@ -36,7 +36,9 @@ const Page: FC<TMenuOption> = ({ title, children = [] }) => {
         position: "relative",
       }}
     >
-      <Button onMouseEnter={handleOpen}>{title}</Button>
+      <Button color="secondary" onMouseEnter={handleOpen}>
+        {title}
+      </Button>
 
       {Boolean(children.length) && isOpen && (
         <Card
@@ -80,28 +82,32 @@ const Page: FC<TMenuOption> = ({ title, children = [] }) => {
         </Card>
       )}
 
-      {shouldShowSubMenu && !!currentMenuIdx && (
-        <Box
-          position="absolute"
-          top={
-            (currentMenuIdx as number) *
-              (listItemRef?.current?.clientHeight || 0) +
-            12
-          }
-          left="9.3125rem"
-          onMouseEnter={handleEnterChild}
-          onMouseLeave={handleLeaveChild}
-          sx={{
-            borderRadius: ".25rem",
-            padding: ".375rem .625rem",
-            boxShadow:
-              "0rem .125rem .375rem rgba(0, 0, 0, 0.1), 0rem .25rem .75rem rgba(0, 0, 0, 0.1)",
-          }}
-          zIndex={10000}
-        >
-          <Typography>{children?.[currentMenuIdx - 1].title}</Typography>
-        </Box>
-      )}
+      {shouldShowSubMenu &&
+        !!currentMenuIdx &&
+        children?.[currentMenuIdx - 1].children?.length && (
+          <Box
+            position="absolute"
+            top={
+              (currentMenuIdx as number) *
+                (listItemRef?.current?.clientHeight || 0) +
+              12
+            }
+            left="9.3125rem"
+            onMouseEnter={handleEnterChild}
+            onMouseLeave={handleLeaveChild}
+            sx={{
+              borderRadius: ".25rem",
+              padding: ".375rem .625rem",
+              boxShadow:
+                "0rem .125rem .375rem rgba(0, 0, 0, 0.1), 0rem .25rem .75rem rgba(0, 0, 0, 0.1)",
+              minWidth: "max-content",
+              backgroundColor: "white",
+            }}
+            zIndex={100000}
+          >
+            <Typography>{children?.[currentMenuIdx - 1].title}</Typography>
+          </Box>
+        )}
     </Box>
   );
 };

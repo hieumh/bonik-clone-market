@@ -31,10 +31,19 @@ model IProduct {
   flashDeal        IFlashDeal?
   brand            IBrand         @relation(fields: [brandId], references: [brandId])
   category         ICategory      @relation(fields: [categoryId], references: [categoryId])
+  IBanner          IBanner?
 
   @@index([brandId], map: "Product_brandId_fkey")
   @@index([categoryId], map: "Product_categoryId_fkey")
   @@map("Product")
+}
+
+model IBanner {
+  bannerId    Int      @id @default(autoincrement())
+  productId   Int      @unique
+  title       String
+  description String
+  product     IProduct @relation(fields: [productId], references: [productId])
 }
 
 model IFlashDeal {
