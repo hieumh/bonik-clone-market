@@ -27,7 +27,7 @@ jobs:
         run: |
           cd frontend
           npm install
-          cd ../backend
+          cd ../backend/backend_nestjs_bonik_clone
           npm install
 
       - name: Build Frontend
