@@ -17,5 +17,4 @@ export const shoppingCartMappingSchema = Joi.object({
 
 export const shoppingCartSchema = Joi.object({
   productId: Joi.number().required(),
-  quantity: Joi.number().required(),
 });

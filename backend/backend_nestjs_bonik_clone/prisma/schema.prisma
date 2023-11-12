@@ -10,6 +10,7 @@ datasource db {
 model ICategory {
   categoryId   Int        @id @default(autoincrement())
   categoryName String
+  srcImg       String     @default("")
   products     IProduct[]
 
   @@map("Category")
@@ -72,9 +73,10 @@ model ICartProduct {
 }
 
 model IBrand {
-  brandId  Int        @id @default(autoincrement())
-  name     String
-  products IProduct[]
+  brandId          Int        @id @default(autoincrement())
+  name             String
+  startWorkingDate DateTime?
+  products         IProduct[]
 
   @@map("Brand")
 }

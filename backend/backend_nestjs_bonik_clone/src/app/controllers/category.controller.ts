@@ -6,24 +6,18 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { CategoryService } from '../services/category.service';
-import { ProductService } from '../services/product.service';
-import {
-  TCategoriesResponse,
-  TTopBestCategories,
-} from 'src/common/interfaces/category.interface';
+import { TCategoriesResponse } from 'src/common/interfaces/category.interface';
 import { MapInterceptor } from '@automapper/nestjs';
 import { Category } from '../models/category.model';
 import { CategoryDto } from '../dtos/category.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ICategory } from '@prisma/client';
 
 @Injectable()
 @Controller('category')
 @UseGuards(AuthGuard('jwt'))
 export class CategoryController {
-  constructor(
-    private readonly categoryService: CategoryService,
-    private readonly productService: ProductService,
-  ) {}
+  constructor(private readonly categoryService: CategoryService) {}
 
   @Get()
   @UseInterceptors(MapInterceptor(Category, CategoryDto))
@@ -32,7 +26,7 @@ export class CategoryController {
   }
 
   @Get('top-categories')
-  async findTopCategory(): TTopBestCategories {
-    return await this.productService.findTopBestCategory();
+  async findTopCategory(): Promise<Array<ICategory | null>> {
+    return await this.categoryService.findTopCategory();
   }
 }

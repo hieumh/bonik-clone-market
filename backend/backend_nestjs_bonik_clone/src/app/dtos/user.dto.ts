@@ -1,6 +1,7 @@
 import { AutoMap } from '@automapper/classes';
+import { IUser } from '@prisma/client';
 
-export class UserDto {
+export class UserDto implements Partial<IUser> {
   @AutoMap()
   userId: number;
 

@@ -1,11 +1,13 @@
 import { AutoMap } from '@automapper/classes';
+import { IProduct } from '@prisma/client';
+import { FlashDeal } from '../models/flash-deal.model';
 
-export class ProductDto {
+export class ProductDto implements Partial<IProduct> {
   @AutoMap()
-  readonly productId: string;
+  readonly productId: number;
 
   @AutoMap()
-  readonly categoryId: string;
+  readonly categoryId: number;
 
   @AutoMap()
   readonly productName: string;
@@ -29,4 +31,6 @@ export class ProductDto {
 
   @AutoMap()
   rating: number;
+
+  flashDeal: FlashDeal;
 }

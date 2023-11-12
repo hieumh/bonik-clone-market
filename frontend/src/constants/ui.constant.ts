@@ -8,4 +8,5 @@ export const COLORS = {
   error: "#f44336",
   warn: "#ff9800",
   info: "#2196f3",
+  iceCream: "#e3e9ef",
 };

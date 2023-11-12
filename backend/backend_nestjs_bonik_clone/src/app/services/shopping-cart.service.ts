@@ -35,7 +35,7 @@ export class ShoppingCartService {
   }
 
   async createCartProduct(data: TShoppingCartCreate, userId: number) {
-    const { productId, quantity } = data;
+    const { productId } = data;
 
     if (!isEmpty(await this.findCartProductByField({ productId, userId }))) {
       throw new ConflictException();
@@ -44,7 +44,7 @@ export class ShoppingCartService {
     return await this.prisma.iCartProduct.create({
       data: {
         productId,
-        quantity,
+        quantity: 1,
         userId,
         closeOrder: false,
       },

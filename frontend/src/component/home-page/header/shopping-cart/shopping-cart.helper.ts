@@ -10,6 +10,16 @@ export const getAllCart = async (): Promise<
   return response.data;
 };
 
+export const createShoppingCart = async (productId: number) => {
+  const response = await ApiHelper.post("api/v1/shopping-cart", {
+    data: {
+      productId,
+    },
+  });
+
+  return response.data;
+};
+
 export const updateProductQuantity = async (
   shoppingCartId: number,
   quantity: number

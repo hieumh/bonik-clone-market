@@ -20,4 +20,14 @@ export class brandController {
       items: result.items.map((item) => mapper.map(item, Brand, BrandDto)),
     };
   }
+
+  @Get('feature-brand')
+  async getFeatureBrand(@Query() options: IPaginationOptions) {
+    const result = await this.brandService.getAllFeatureBrand(options);
+
+    return {
+      ...result,
+      items: result.items.map((item) => mapper.map(item, Brand, BrandDto)),
+    };
+  }
 }

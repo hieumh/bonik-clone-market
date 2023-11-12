@@ -39,7 +39,7 @@ async function bootstrap() {
       (destination) => destination.salePercent,
       mapFrom((source) =>
         getPercentOfFirstNum(
-          source.price - source.flashDeal.dealPrice,
+          source.price - (source.flashDeal?.dealPrice || 0),
           source.price,
         ),
       ),
@@ -57,6 +57,10 @@ async function bootstrap() {
           source.product.price,
         ),
       ),
+    ),
+    forMember(
+      (destination) => destination.product,
+      mapFrom((source) => source.product),
     ),
   );
   createMap(mapper, Category, CategoryDto);

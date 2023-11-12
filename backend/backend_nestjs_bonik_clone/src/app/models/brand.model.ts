@@ -6,5 +6,8 @@ export class Brand implements IBrand {
   brandId: number;
 
   @AutoMap()
+  startWorkingDate;
+
+  @AutoMap()
   name: string;
 }

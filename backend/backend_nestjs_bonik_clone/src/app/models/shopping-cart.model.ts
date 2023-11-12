@@ -1,3 +1,3 @@
 import { ICartProduct } from '@prisma/client';
 
-export type TShoppingCartCreate = Pick<ICartProduct, 'productId' | 'quantity'>;
+export type TShoppingCartCreate = Pick<ICartProduct, 'productId'>;
