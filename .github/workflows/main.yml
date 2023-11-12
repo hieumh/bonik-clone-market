@@ -1,0 +1,46 @@
+name: Full Stack Deployment
+
+on:
+  push:
+    branches:
+      - main # Change this to your main branch name
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: admin
+          MYSQL_DATABASE: bonik-clone
+          MYSQL_USER: admin
+          MYSQL_PASSWORD: admin
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Node.js and dependencies
+        run: |
+          cd frontend
+          npm install
+          cd ../backend
+          npm install
+
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Start MySQL service
+        run: docker run --name mysql -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=bonik-clone -e MYSQL_USER=admin -e MYSQL_PASSWORD=admin -d -p 3306:3306 mysql:5.7
+
+      - name: Deploy to Heroku
+        run: |
+          cd backend
+          heroku container:login
+          heroku container:push web -a your-heroku-app-name
+          heroku container:release web -a your-heroku-app-name
