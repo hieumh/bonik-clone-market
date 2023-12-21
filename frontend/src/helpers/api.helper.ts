@@ -1,5 +1,9 @@
-import { TOKEN_STORE_KEY } from "@/constants/common.constant";
-import axios, { AxiosHeaders, AxiosRequestConfig } from "axios";
+import axios, {
+  AxiosError,
+  AxiosHeaders,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from "axios";
 
 const baseUrl = "http://localhost:3000/";
 
@@ -29,6 +33,44 @@ const populateConfig = (config: AxiosRequestConfig): AxiosRequestConfig => {
     ...config,
   };
 };
+
+export const refreshToken = async () => {
+  try {
+    await ApiHelper.post("/api/v1/auth/refresh-token", {
+      withCredentials: true,
+    });
+
+    return true;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+};
+
+// There some issue in the house
+let hasError = false;
+axios.interceptors.response.use(
+  (response) => response,
+  async (error: AxiosError) => {
+    if (hasError) {
+      return;
+    }
+
+    hasError = true;
+    const originalRequest = error?.config;
+
+    if (error.response && error.response.status === 401) {
+      try {
+        const status = await refreshToken();
+        if (status === true && originalRequest) {
+          return axios(originalRequest);
+        }
+      } catch (e) {
+        return Promise.reject(error);
+      }
+    }
+  }
+);
 
 export const ApiHelper = {
   get: (url: string, config: AxiosRequestConfig = {}) =>

@@ -20,5 +20,6 @@ export class FlashDeal implements IFlashDeal {
   @AutoMap()
   endDate: Date;
 
+  @AutoMap()
   product: IProduct;
 }

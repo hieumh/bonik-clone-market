@@ -38,11 +38,10 @@ export class ShoppingCartController {
   @UsePipes(new JoiValidationPipe(shoppingCartSchema))
   createShoppingCart(@Body() body: TShoppingCartCreate, @Req() req) {
     const { userId } = req.user;
-    const { productId, quantity } = body;
+    const { productId } = body;
     return this.shoppingCardService.createCartProduct(
       {
         productId,
-        quantity,
       },
       userId,
     );

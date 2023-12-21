@@ -1,6 +1,5 @@
 import { PrismaClient, IProduct, IFlashDeal } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
-import { TTopBestCategories } from 'src/common/interfaces/category.interface';
 import { map, take, orderBy } from 'lodash';
 import { getPercentOfFirstNum } from 'src/common/helpers/common.helper';
 import {
@@ -8,6 +7,7 @@ import {
   IPaginationResult,
   paginate,
 } from 'src/common/helpers/pagination.helper';
+import { DEFAULT_NO_OF_TOP_RATINGS } from 'src/common/constants/product.constant';
 @Injectable()
 export class ProductService {
   constructor(private readonly prisma: PrismaClient) {}
@@ -51,23 +51,9 @@ export class ProductService {
     });
   }
 
-  // TODO: define right return type for this service
-  async findTopBestCategory(): TTopBestCategories {
-    return (await this.prisma.iProduct.groupBy({
-      by: ['categoryId'],
-      _sum: {
-        productSoldCount: true,
-      },
-      orderBy: {
-        _sum: {
-          productSoldCount: 'desc',
-        },
-      },
-    })) as unknown as TTopBestCategories;
-  }
-
-  // TODO: update this feature after implement authentication service
-  async findTopRatings(takeNumber: number): Promise<Array<IProduct>> {
+  async findTopRatings(
+    takeNumber = DEFAULT_NO_OF_TOP_RATINGS,
+  ): Promise<Array<IProduct>> {
     return await this.prisma.iProduct.findMany({
       include: {
         flashDeal: true,
@@ -91,11 +77,14 @@ export class ProductService {
     });
   }
 
-  async findBigDiscounts(takeNumber: number): Promise<Array<IProduct>> {
-    const pagingProducts = await this.findAll();
+  async findBigDiscounts(
+    paginationOptions?: IPaginationOptions,
+  ): Promise<IPaginationResult<IProduct & { flashDeal?: IFlashDeal }>> {
+    const pagingProducts = await this.findAll(paginationOptions);
 
-    return take(
-      orderBy(
+    return {
+      ...pagingProducts,
+      items: orderBy(
         map(pagingProducts.items, (product) => ({
           ...product,
           salePercent: getPercentOfFirstNum(
@@ -106,8 +95,7 @@ export class ProductService {
         ['salePercent'],
         ['desc'],
       ),
-      takeNumber,
-    );
+    };
   }
 
   async findAllByBrand(id: number, options?: IPaginationOptions) {

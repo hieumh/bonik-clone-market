@@ -79,7 +79,7 @@ export class ProductController {
 
   @Get('/top-ratings')
   async getTopRatings(
-    @Param('take', ParseIntPipe) takeNumber = DEFAULT_NO_OF_TOP_RATINGS,
+    @Query('take', ParseIntPipe) takeNumber = DEFAULT_NO_OF_TOP_RATINGS,
   ): TProductsResponse {
     const topRatingProducts = await this.productService.findTopRatings(
       takeNumber,
@@ -99,6 +99,18 @@ export class ProductController {
     return newArrivals.map((product) =>
       mapper.map(product, Product, ProductDto),
     );
+  }
+
+  @Get('/big-discount')
+  async getBigDiscounts(): TProductsPaginationResult {
+    const dataResponse = await this.productService.findBigDiscounts();
+
+    return {
+      ...dataResponse,
+      items: dataResponse.items.map((product) =>
+        mapper.map(product, Product, ProductDto),
+      ),
+    };
   }
 
   @Get('/brand/:id')

@@ -14,6 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { searchRequest } from "../header.helper";
 import { CATEGORIES } from "../header.constant";
 import { COLORS } from "@/constants/ui.constant";
+import { SEARCH_KEY } from "@/constants/server-state.constant";
 
 const StyledSelect = styled(Select)({
   minWidth: "8.125rem",
@@ -93,7 +94,7 @@ const Search: FC = () => {
   );
   const [isHoverSearch, setHoverSearch] = useState<boolean>(false);
   const { refetch } = useQuery(
-    ["search"],
+    [SEARCH_KEY],
     () => searchRequest(search, categoryIndex),
     {
       enabled: false,

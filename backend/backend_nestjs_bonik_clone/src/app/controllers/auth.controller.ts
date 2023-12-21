@@ -6,13 +6,13 @@ import {
   UseGuards,
   Response,
   HttpStatus,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { User } from '../models/user.model';
 import { UserDto } from '../dtos/user.dto';
 import { AuthService } from '../services/auth.service';
 import { IRegister } from 'src/common/interfaces/login.interface';
 import { mapper } from 'src/mapping/mapper';
-import { ITokenResponse } from 'src/common/interfaces/common.interface';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from '../services/user.service';
 
@@ -26,12 +26,7 @@ export class AuthController {
   @Post('login')
   @UseGuards(AuthGuard('local'))
   async login(@Request() req, @Response() res): Promise<UserDto> {
-    const { access_token, refresh_token } = await this.authService.login(
-      req.user,
-    );
-
-    res.cookie('refreshToken', refresh_token, { httpOnly: true });
-    res.cookie('accessToken', access_token, { httpOnly: true });
+    await this.authService.login(req.user, res);
 
     const userInformation = await this.userService.findOne(req.user?.email);
     const responseUser = mapper.map(userInformation, User, UserDto);
@@ -48,9 +43,16 @@ export class AuthController {
   }
 
   @Post('refresh-token')
-  async refreshToken(
-    @Body() tokenCombine: ITokenResponse,
-  ): Promise<ITokenResponse> {
-    return this.authService.refreshToken(tokenCombine);
+  async refreshToken(@Request() req, @Response() res): Promise<string> {
+    const cookies = req.cookies;
+
+    if (!cookies || !cookies['refreshToken']) {
+      throw new UnauthorizedException();
+    }
+
+    const refreshToken = cookies['refreshToken'];
+    await this.authService.refreshToken(refreshToken, res);
+
+    return res.status(HttpStatus.OK).send('ok');
   }
 }

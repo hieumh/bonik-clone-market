@@ -7,4 +7,7 @@ export class Category implements ICategory {
 
   @AutoMap()
   categoryName: string;
+
+  @AutoMap()
+  srcImg: string;
 }

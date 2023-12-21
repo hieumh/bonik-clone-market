@@ -13,6 +13,7 @@ import { databaseConfig } from './config/database.config';
 import { ENV_FILE_PATH } from './config/configuration.config';
 import { AuthModule } from './app/modules/auth.module';
 import { BannerModule } from './app/modules/banner.module';
+import { BrandModule } from './app/modules/brand.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { BannerModule } from './app/modules/banner.module';
     ShoppingCartModule,
     CategoryModule,
     BannerModule,
+    BrandModule,
     AutomapperModule.forRoot({
       strategyInitializer: classes(),
     }),

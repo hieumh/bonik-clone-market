@@ -13,31 +13,26 @@ import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import ShoppingCartItem from "./shopping-cart-item/ShoppingCartItem.component";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { IPaginationResult } from "@/model/common.model";
-import { AxiosError } from "axios";
 import { getAllCart, removeShoppingCart } from "./shopping-cart.helper";
 import { IShoppingCart, IShoppingCartView } from "@/model/shopping-cart.model";
 import SomethingWentWrong from "@/common/something-went-wrong-banner/SomethingWentWrong.component";
-import NoDataFound from "@/common/no-data-found/NoDataFound.component";
 import { toast } from "react-toastify";
 import { SOMETHING_WENT_WRONG } from "@/constants/common.constant";
 import { SHOPPING_CART_KEY } from "@/constants/server-state.constant";
+import NoDataFound from "@/common/no-data-found/NoDataFound.component";
 
 const ShoppingCart: FC = () => {
   const queryClient = useQueryClient();
-
   const { openModal, open, closeModal } = useModal(false);
-  const [error, setError] = useState<AxiosError | null>(null);
 
   const {
     data: shoppingCarts,
     isLoading,
     isSuccess,
+    isError,
   } = useQuery<IPaginationResult<IShoppingCart>>({
     queryFn: getAllCart,
     queryKey: [SHOPPING_CART_KEY],
-    onError: (err) => {
-      setError(err as AxiosError);
-    },
     refetchOnWindowFocus: false,
   });
   const { mutateAsync: removeCart } = useMutation<
@@ -111,7 +106,7 @@ const ShoppingCart: FC = () => {
             </Stack>
           )}
 
-          {isSuccess && !!shoppingCartRemapped?.length ? (
+          {isSuccess && (
             <>
               <Stack overflow="auto">
                 <Stack
@@ -146,11 +141,13 @@ const ShoppingCart: FC = () => {
                 </Button>
               </Stack>
             </>
-          ) : (
-            <NoDataFound />
           )}
 
-          {error && <SomethingWentWrong />}
+          {isSuccess && !shoppingCartRemapped?.length && <NoDataFound />}
+
+          {(isError || (isSuccess && !shoppingCartRemapped?.length)) && (
+            <SomethingWentWrong />
+          )}
         </Stack>
       </Drawer>
     </div>

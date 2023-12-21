@@ -36,7 +36,7 @@ const Header: FC = () => {
 
         <Stack flexDirection="row">
           {menu.map((menuItem) => (
-            <Page {...menuItem} />
+            <Page key={menuItem.title} {...menuItem} />
           ))}
         </Stack>
       </Stack>

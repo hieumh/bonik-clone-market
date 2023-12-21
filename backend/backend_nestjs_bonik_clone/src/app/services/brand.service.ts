@@ -9,4 +9,15 @@ export class BrandService {
   async getAllBrand(options) {
     return await paginate<IBrand>(this.prismaClient.iBrand, options);
   }
+
+  async getAllFeatureBrand(options) {
+    return await paginate<IBrand>(this.prismaClient.iBrand, {
+      ...options,
+      where: {
+        startWorkingDate: {
+          lte: new Date(),
+        },
+      },
+    });
+  }
 }
