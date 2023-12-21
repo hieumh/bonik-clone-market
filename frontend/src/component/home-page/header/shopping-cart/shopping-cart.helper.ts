@@ -10,7 +10,13 @@ export const getAllCart = async (): Promise<
   return response.data;
 };
 
-export const createShoppingCart = async (productId: number) => {
+export const createShoppingCart = async (
+  productId?: number
+): Promise<IShoppingCart | null> => {
+  if (productId === 0) {
+    return null;
+  }
+
   const response = await ApiHelper.post("api/v1/shopping-cart", {
     data: {
       productId,

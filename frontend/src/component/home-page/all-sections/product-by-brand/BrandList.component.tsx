@@ -1,61 +1,57 @@
+import { COLORS } from "@/constants/ui.constant";
 import useRouter from "@/hooks/user-router.hook";
-import { IBrand } from "@/model/brand.model";
-import { Button, Stack } from "@mui/material";
+import { EFieldBrand, IBrand } from "@/model/brand.model";
+import { THandler } from "@/model/common.model";
+import { Button, Stack, styled } from "@mui/material";
 import { FC } from "react";
 
 interface IBrandList {
   type: EFieldBrand;
+  brands: IBrand[];
+  setCurrentBrand: THandler;
 }
 
-const brandLists = [
-  {
-    id: 1,
-    title: "Ferrari",
+const BrandButton = styled(Button)(() => ({
+  backgroundColor: COLORS.buttonWhite,
+  color: COLORS.text,
+  textAlign: "left",
+  "&:hover": {
+    backgroundColor: COLORS.textGrey,
+    color: COLORS.text,
   },
-  {
-    id: 2,
-    title: "Tesla",
-  },
-  {
-    id: 3,
-    title: "Bmw",
-  },
-  {
-    id: 4,
-    title: "Toyota",
-  },
-  {
-    id: 5,
-    title: "Mini",
-  },
-] as IBrand[];
+}));
 
-enum EFieldBrand {
-  CAR = "car",
-  FASHION = "fashion",
-  MOTORBIKE = "motorbike",
-}
-
-const BrandList: FC<IBrandList> = ({ type }) => {
+const BrandList: FC<IBrandList> = ({ type, brands, setCurrentBrand }) => {
   const { navigate } = useRouter();
-
-  const handleViewProduct = (id: number) => () => {};
 
   const handleViewAll = () => {
     navigate("/brand&type=" + type);
   };
 
   return (
-    <Stack>
-      <Stack flexDirection="column" padding="1.25rem" gap=".75rem">
-        {brandLists.map((brand) => (
-          <Button key={brand.id} onClick={handleViewProduct(brand.id)}>
+    <Stack
+      padding="1.25rem"
+      gap="1rem"
+      sx={{
+        backgroundColor: "white",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      }}
+    >
+      <Stack flexDirection="column" gap=".75rem" justifyContent="space-between">
+        {brands?.map((brand) => (
+          <BrandButton
+            key={brand.id}
+            variant="contained"
+            onClick={() => setCurrentBrand(brand)}
+          >
             {brand.title}
-          </Button>
+          </BrandButton>
         ))}
       </Stack>
 
-      <Button onClick={handleViewAll}>View All Brand</Button>
+      <BrandButton variant="contained" onClick={handleViewAll}>
+        View All Brand
+      </BrandButton>
     </Stack>
   );
 };

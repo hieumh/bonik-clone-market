@@ -47,9 +47,16 @@ export const refreshToken = async () => {
   }
 };
 
+// There some issue in the house
+let hasError = false;
 axios.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
+    if (hasError) {
+      return;
+    }
+
+    hasError = true;
     const originalRequest = error?.config;
 
     if (error.response && error.response.status === 401) {

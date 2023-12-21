@@ -6,6 +6,7 @@ import ContactBar from "./header/contact-bar/ContactBar.component";
 import TopCategory from "./all-sections/top-categories/TopCategory.component";
 import TopRatings from "./all-sections/top-ratings/TopRatings.component";
 import FeatureBrand from "./all-sections/feature-branch/FeatureBranch.component";
+import ProductByBrand from "./all-sections/product-by-brand/ProductByBrand.component";
 
 interface IHomeProps {}
 
@@ -45,9 +46,9 @@ const Home: FC<IHomeProps> = () => {
           <FeatureBrand />
         </Box>
 
-        {/* <Box>
-        <FeaturedBrands />
-      </Box> */}
+        <Box>
+          <ProductByBrand />
+        </Box>
       </Stack>
     </>
   );
