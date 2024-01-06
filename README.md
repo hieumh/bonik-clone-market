@@ -1,6 +1,6 @@
 # App Name
 
-This is a clone of the [Bonik Market](https://bonik-react.vercel.app/market-1) app built with Vite, ReactJS, and React Router DOM.
+This is a clone of the Bonik Market app built with Vite, ReactJS, and React Router DOM.
 
 ## Description
 
@@ -16,28 +16,20 @@ This application is a clone of the Bonik Market app, which allows users to brows
 
 ## Installation
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-username/repo-name.git
-
-2. Navigate to the project directory:
-`cd repo-name`
-
-3. Install dependencies:
-`npm install`
+1. Clone the repository: `git clone https://github.com/your-username/repo-name.git`
+2. Navigate to the project directory: `cd repo-name`
+3. Install dependencies: `npm install`
 
 ## Usage
-1. Run the development server:
 
-`npm run dev`
-Open your web browser and visit http://localhost:3000 to access the application.
+1. Run the development server: `npm run dev`
+2. Open your web browser and visit http://localhost:3000 to access the application.
 
-2. Dependencies
+## Dependencies
+
 - Vite
 - ReactJS
 - React Router DOM
-- Credits
-
-## License
-This project is licensed under the MIT License.
+- NestJS
+- Prisma
+- MySQL
